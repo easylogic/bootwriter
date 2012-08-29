@@ -33,8 +33,11 @@ Bootstrap Writer 의 클라이언트 기본 구조는 Requirejs, Backbone.js, Ja
 
 아래 두가지 모듈을 사용해서 최적화를 합니다. 
 
-jade-amd 
-requirejs 
+`jade-amd `
+
+`requirejs `
+
+기본적으로 NodeJS 를 사용하지만 RESTful 서비스에 이용하는 것 말고는 모두 javascript 웹 앱이라고 보셔도 됩니다. 
 
 
 ### Demo Site 
@@ -42,6 +45,8 @@ requirejs
 
 ### Screen Cast 
 [Sample](http://blog.easylogic.co.kr/view/503cda88000000583e000006)
+
+
 
 
 # 글쓰기를 바꿔보자? 
