@@ -89,7 +89,7 @@ Bootstrap Writer 는 글을 쓸 때  html editor 만 사용해서 오는 불편�
 * Carousel
 * Tab
 
-Bootstrap Writer uses a number of opensource projects to work
+이 프로젝트는 아래 라이브러리들을 사용합니다. 감사합니다. 
 
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
 * [jQuery](http://jquery.com/)
@@ -97,6 +97,7 @@ Bootstrap Writer uses a number of opensource projects to work
 * [js-beautify](http://jsbeautifier.org/)
 * [google-code-pretty](https://code.google.com/p/google-code-prettify/)
 * [TinyMCE] (http://www.tinymce.com/)
+* [ACE] (https://github.com/ajaxorg/ace, https://github.com/ajaxorg/ace-builds/)
  
 
 
