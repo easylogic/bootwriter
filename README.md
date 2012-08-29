@@ -8,6 +8,33 @@ Bootstrap 을 위한 Editor 서버용 공개합니다.
 
 mongo DB 와 연동되어서 기본 데이타를 실시간으로 저장하고 화면을 바로 확인 하실 수 있습니다. 
 
+## 설치
+
+`git clone https://github.com/easylogic/bootwriter.git`
+
+`cd bootwrriter`
+
+`npm install`
+
+## 실행 
+
+`node app.js`
+
+## 빌드
+
+Bootstrap Writer 의 클라이언트 기본 구조는 Requirejs, Backbone.js, Jade 3가지로 되어 있습니다. 
+그래서 Jade 로 되어 있는 템플릿을 좀 더 빠르게 로딩하기 위해서 r.js 명령어로 최적화 하게 되어 있습니다. 
+
+`cd public` 
+
+`./build.sh`
+
+디렉토리에 보시면  build.sh 가 있는데요. 이 것을 실행하면  에디터에 필요한 Backbone.js + Jade 파일들을 패키징 해줍니다. 
+
+아래 두가지 모듈을 사용해서 최적화를 합니다. 
+
+jade-amd 
+requirejs 
 
 
 ### Demo Site 
