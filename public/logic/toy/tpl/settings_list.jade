@@ -1,0 +1,138 @@
+span.span4.data_list(style='overflow:auto;height:350px;')
+span(style='display:inline;width:550px;').span4
+  ul.nav.nav-tabs
+    li.active: a(href='#settings_list_base', data-toggle='tab') Base
+    li: a(href='#settings_list_ext', data-toggle='tab') Extend    
+    li: a(href='#settings_list_form', data-toggle='tab') Form
+    li
+      a.btn.btn-success.add_data 
+        | Add &nbsp;
+        i.icon-plus.icon-white      
+    li
+      a.btn.btn-info.modify_data
+        | Modify &nbsp;
+        i.icon-edit.icon-white
+      
+  .tab-content
+    .tab-pane#settings_list_ext(style='height:400px;')
+      form
+        fieldset
+          .input-append
+            select.data(data-name= "buttonSize", data-placeholder= "Button Size", style='width:300px;')
+              option(value='')
+              option(value='large') large
+              option(value='small') small
+              option(value='mini') mini
+          .input-append
+            select.data(data-name= "buttonType", data-placeholder= "Button Type", style='width:300px;')
+              option(value='')
+              option(value='primary') primary
+              option(value='danger') danger
+              option(value='warning') warning              
+              option(value='success') success              
+              option(value='info') info              
+              option(value='inverse') inverse
+          .input-append
+            select.data(data-name= "activeType", data-placeholder= "Active Type", style='width:300px;')
+              option(value='')
+              option(value='active') active
+              option(value='nav-header') nav-header
+              option(value='divider') divider          
+              option(value='disabled') disabled          
+              option(value='previous') previous          
+              option(value='next') next          
+          .input-append
+            select.data(data-name= "groupType", data-placeholder= "Group Type", style='width:300px;')
+              option(value='')
+              option(value='vertical') vertical
+          .input-append
+            select.data(data-name= "buttonBlock", data-placeholder= "Button Block", style='width:300px;')
+              option(value='')
+              option(value='block') block              
+              
+    .tab-pane#settings_list_form(style='height:400px;')
+      form
+        fieldset  
+          .input-append                         
+            select.data(data-name= "state", data-placeholder= "State", style='width:140px;')
+              option(value='')           
+              option(value='uneditable') uneditable           
+              option(value='disabled') disabled
+            | &nbsp;                         
+            select.data(data-name= "groupState", data-placeholder= "Group", style='width:140px;')
+              option(value='')           
+              option(value='warning') warning           
+              option(value='success') success              
+              option(value='error') error
+          .input-append
+            select.data(data-name= "span", data-placeholder= "Span", style='width:140px;')
+              option(value='')           
+              option(value='span1') span1           
+              option(value='span2') span2           
+              option(value='span3') span3           
+              option(value='span4') span4           
+              option(value='span5') span5           
+              option(value='span6') span6           
+              option(value='span7') span7           
+              option(value='span8') span8           
+              option(value='span9') span9           
+              option(value='span10') span10           
+              option(value='span11') span11           
+              option(value='span12') span12           
+            | &nbsp;                    
+            select.data(data-name= "size", data-placeholder= "Size", style='width:140px;')
+              option(value='')           
+              option(value='input-xlarge') input-xlarge
+              option(value='input-xxlarge') input-xxlarge
+              option(value='input-large') input-large
+              option(value='input-medium') input-medium
+              option(value='input-small') input-small
+              option(value='input-mini') input-mini
+          .input-append                      
+            input.data(type='text', data-name= 'name', placeholder="Name", style='width:300px')
+          .input-append
+            select.data(data-name= 'helperType', data-placeholder= "Helper", style='width:84px;')
+              option(value='')
+              option(value='inline') inline            
+              option(value='block') block
+            | &nbsp;
+            input.data(type='text', data-name= 'helper', placeholder="Input Helper Text", style='width:202px')
+          .input-append                      
+            input.data(type='text', data-name= 'placeholder', placeholder="Place Holder", style='width:300px')
+          .input-append                      
+            textarea.data(rows=3, data-name= 'value', placeholder="Input Value", style='width:300px')
+    .tab-pane.active#settings_list_base(style='height:400px;')
+      form
+        fieldset
+          .input-append
+            select.span2.data(data-name= 'depth', data-placeholder="Depth", style='width:84px;')
+              option(value='')          
+              option(value= 1) 1
+              option(value= 2) 2
+              option(value= 3) 3
+              option(value= 4) 4
+              option(value= 5) 5      
+            | &nbsp;
+            select.data(data-name= 'icon', data-placeholder="Icon", style='width:166px;')
+              option(value='')        
+              each ic in App.icon_list
+                option(value= ic)!= ic
+            span.add-on.ic-view-point
+          .input-append
+            select.data(data-name= "type", data-placeholder= "Control Type", style='width:300px;')
+              option(value='')
+              option(value='text') text           
+              option(value='select') select           
+              option(value='checkbox') checkbox           
+              option(value='radio') radio           
+              option(value='textarea') textarea           
+              option(value='file') file            
+          .input-append                      
+            input.data(type='text', data-name= 'title', placeholder="Insert Title", style='width:300px')
+          .input-append                      
+            input.data(type='text', data-name= 'link', placeholder="Insert Link", style='width:300px')
+          .input-append                      
+            input.data(type='text', data-name= 'image', placeholder="Insert Image", style='width:300px')                                                    
+          .input-append                      
+            textarea.data(rows=3, data-name= 'content', placeholder="Input Content", style='width:300px')
+  .data_target

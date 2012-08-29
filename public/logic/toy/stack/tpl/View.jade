@@ -1,0 +1,8 @@
+ul.nav(class= 'nav-' + kind + 's nav-stacked')
+  each obj, i in list
+    li(class= obj.activeType, data-index= i)
+      a(data-toggle= kind, data-index= i, href= obj.link)
+        if obj.icon
+          i(class= 'icon-' + obj.icon) 
+          | &nbsp;				
+        != obj.title

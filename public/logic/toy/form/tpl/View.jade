@@ -1,0 +1,28 @@
+form(class= (kind ? 'form-' + kind : ""))
+  fieldset
+    if title
+      legend!= title
+    each obj, i in list
+      - var el_id = "element_" + cid + "_" + i
+      .control-group(class= (obj.groupState ? obj.groupState : ""))
+        label.control-label(for= el_id )!= obj.title
+        .controls
+          - if (obj.type == 'select' || obj.type == 'multi-select')
+            select(id= el_id, name= obj.name)
+              option(value= '')
+              each val, i in obj.value.split(/\n/)
+                option(value= i)!= val
+          - else if (obj.type == 'checkbox' || obj.type == 'radio')
+              each val, i in obj.value.split(/\n/)
+                label(class= obj.type)
+                  input(type= obj.type, id= obj.name + "_" + i, name= obj.name + (obj.type == 'checkbox' ? '[]' : ''), value= val)
+                  != val                
+          - else
+            - var state = (obj.state == 'disabled' ? obj.state : "");
+            - state += " " + (obj.state == 'uneditable' ? "uneditable-input" : "");
+            input(type= obj.type, id= el_id, class= state, name= obj.name)
+          if obj.helper
+            if obj.helperType == 'inline'
+              span.help-inline!= obj.helper
+            else
+              p.help-block!= obj.helper              

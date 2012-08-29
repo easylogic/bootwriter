@@ -1,0 +1,16 @@
+if title
+  h2!= title
+if text 
+  p!= text
+- if (kind == '') className = "pagination"
+- if (kind == 'pager') className = "pager"
+- if (kind == 'centered') className = "pagination pagination-centered"  
+div(class= className)
+  ul
+    each obj in list
+      li(class= obj.activeType)
+        a(href= obj.link)
+          if obj.icon
+            i(class= 'icon-' + obj.icon) 
+            | &nbsp;				
+          != obj.title

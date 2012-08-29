@@ -1,0 +1,15 @@
+.hero-unit
+  if title
+    h2!= title
+  if text
+    p!= text   
+  p
+    each button in list 
+      | &nbsp;
+      a.btn.btn-large(class= button.cls, href= button.link ? button.link : "#")
+        if button.buttonType
+          i(class= 'icon-' + button.icon).icon-white
+        else
+          i(class= 'icon-' + button.icon)
+        | &nbsp;      
+        != button.title

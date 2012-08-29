@@ -1,0 +1,16 @@
+if title
+  h2!= title
+if text  
+  p!= text
+.carousel.slide(id= 'carousel_' + cid)
+  .carousel-inner
+    each obj,i in list 
+      .item(class= (obj.activeType == 'active' ? 'active' : '') )
+        img(src= obj.image)
+        if obj.title || obj.text
+          .carousel-caption
+            h4!= obj.title
+            p!= obj.text    
+  if button 
+    a.carousel-control.left(href='#carousel_' + cid, data-slide='prev',style='cursor:pointer') &lsaquo;
+    a.carousel-control.right(href='#carousel_' + cid, data-slide='next',style='cursor:pointer') &rsaquo;

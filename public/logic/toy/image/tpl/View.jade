@@ -1,0 +1,14 @@
+if link
+  a(href= link): img(src= image)
+else 
+  img(src= image, class= cls)
+.caption
+  if title
+    h5!= title
+  if text
+    p!= text
+  if list.length > 0
+    p
+      each button in list 
+        a.btn(class= button.cls, href= button.link ? button.link : "#")!= button.title
+          | &nbsp;

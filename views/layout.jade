@@ -1,0 +1,60 @@
+!!!
+html(lang="ko")
+  head
+    title EasyLogic
+    meta(http-equiv="X-UA-Compatible", content="IE-EmulateIE8")
+    //if lt IE 9
+      script(src='/lib/html5.js')    
+    style
+      body { padding-top : 50px; }    
+      
+    link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
+    link(id="userThemes", rel='stylesheet', href='/logic/themes/theme1/1.css')
+
+
+  body
+    script(type="text/javascript", src="/lib/json2.js")
+    script(type="text/javascript", src="/lib/jquery-1.7.1.min.js")
+    script(type="text/javascript", src="/lib/underscore-min.js")
+    script(type="text/javascript", src="/lib/backbone-min.js")
+    script(type="text/javascript", src="/lib/require-2.0.js")
+    script(type="text/javascript", src="/logic/main-built.js")    
+    link(rel='stylesheet', href='/lib/google-code-prettify/prettify.css')
+        
+    if mode == 'write'
+      script(type="text/javascript", src="/lib/jquery.bPopup.min.js")    
+      
+      script(type="text/javascript", src="/lib/jquery.ui/jquery-ui-1.8.20.custom.min.js")    
+      link(rel='stylesheet', href='/lib/jquery.ui/smoothness/jquery-ui-1.8.20.custom.css')
+      script(type="text/javascript", src="/lib/jquery.ui/jquery.ui.touch-punch.min.js")
+      
+      link(rel='stylesheet', href='/lib/chosen/chosen.css')          
+      script(type="text/javascript", src="/lib/chosen/chosen.jquery.min.js")    
+      script(type="text/javascript", src="/lib/markdown.js")    
+      script(type="text/javascript", src="/lib/beautify-html.js")
+      script(type="text/javascript", src="/lib/tiny_mce/jquery.tinymce.js")
+      script(type="text/javascript", src="/lib/less-1.3.0.min.js")
+      script(type="text/javascript", src="/lib/google-code-prettify/prettify.js")
+                
+    script(type="text/javascript") 
+        require.config({
+            paths: {
+                jade: '/lib/requirejs.plugin/jade-0.25', 
+                text: '/lib/requirejs.plugin/text',
+                jadeRuntime: '/lib/requirejs.plugin/jadeRuntime' 
+            }
+        }); 
+
+        // global object
+        var App = {
+          mode : '#{mode}'
+        };
+        
+    if mode == 'write'
+      script(type="text/javascript", src="/lib/ace/ace.js")
+  
+    include navbar  
+    != body
+    include footer
+    script(type="text/javascript", src="/lib/bootstrap/js/bootstrap.min.js")    
+    

@@ -1,0 +1,5 @@
+form(name='upload',action='/uploads',method='post',enctype='multipart/form-data',target='image_upload')
+  fieldset(style='padding-left:20px')
+    input.file(type='file',name='image')
+    button.btn.btn-warning.upload(type='submit') Upload
+    iframe.span7(name='image_upload',height='50px',frameborder="0")

@@ -1,0 +1,15 @@
+if title
+  h2!= title
+if text 
+  p!= text
+.accordion(id= 'accordion_' + cid)
+  each obj, i in list
+    .accordion-group(class= 'accordion_list_' + i)
+      .accordion-heading
+        a.accordion-toggle(data-toggle='collapse', data-parent= ' #accordion_' + cid, href= "#collapse_" + cid +  "_" + i )
+          if obj.icon 
+            i(class= 'icon-' + obj.icon) 
+          | &nbsp;
+          != obj.title
+      .accordion-body.collapse(class= i == 0 ? 'in' : '', id= "collapse_" + cid +  "_" + i)
+        .accordion-inner!= obj.text

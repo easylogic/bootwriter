@@ -1,0 +1,13 @@
+form.form-horizontal
+  fieldset(style='padding-left: 20px;')
+    .control-group
+      label.control-label.settings-label Themes
+      .controls  
+        select.themes(data-placeholder="Select Themes")
+          option(value='')
+          each obj in themes
+            option(value= obj.link)!= obj.name
+    .control-group            
+      .skineditor_container(style='position:relative;height:300px;width:100%')
+        #skineditor(style='position:absolute;top:0;bottom:0;left:0;right:0;')
+          = skin

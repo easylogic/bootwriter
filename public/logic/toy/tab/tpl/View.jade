@@ -1,0 +1,16 @@
+if title
+  h2!= title
+if text 
+  p!= text
+.tabbable(class= 'tabs-' + directionType)
+  ul.nav(class= 'nav-' + kind + 's', id= 'myTab_' + cid)
+    each obj, i in list
+      li(class= obj.activeType == 'active' ? 'active' : '')
+        a(data-toggle= kind, href='#tab-content-' + cid + '-' + i)
+          if obj.icon
+            i(class= 'icon-' + obj.icon) 
+            | &nbsp;				
+          != obj.title
+  .tab-content(id= 'myTabContent_' + cid)      
+    each obj, i in list
+      .tab-pane(class= obj.activeType == 'active' ? 'active' : '', id= 'tab-content-' + cid + '-' + i)!= obj.text

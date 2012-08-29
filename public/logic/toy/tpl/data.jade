@@ -1,0 +1,60 @@
+form.form-horizontal(onSubmit='return false;')
+  fieldset(style='padding-left: 20px;')
+    each obj in infoList
+      .control-group    
+        if obj.full
+          - if (obj.type == 'title')
+            mixin title(obj.value, obj.title)
+          - else if (obj.type == 'select')               
+            mixin select(obj.name, obj.select, obj.value, obj.title)       
+          - else if (obj.type == 'text')
+            mixin text(obj.value, obj.title, obj.rows)
+          - else if (obj.type == 'editor')
+            .editor_container(style='position:relative;height:' + obj.height + ';width:' + obj.width)
+              #editor(style='position:absolute;top:0;bottom:0;left:0;right:0;')
+                = obj.value        
+          - else if (obj.type == 'input_text')
+            mixin input_text(obj.value, obj.name, obj.title)      
+          - else if (obj.type == 'html')
+            textarea.text#html_contents(name='text', rows=20, style='width:95%')!= obj.value
+          - else if (obj.type == 'jade')
+            textarea.text(name='text', style='width:100%;height:260px;')!= obj.value
+          - else if (obj.type == 'fulltext')
+            textarea.text(name='text', style='width:100%;height:260px;')!= obj.value                        
+          - else if (obj.type == 'tag')
+            mixin tag(obj.value)
+          - else if (obj.type == 'li_text')
+            mixin li_text(obj.name, obj.value, obj.title)                
+          - else if (obj.type == 'li_checkbox')
+            mixin li_checkbox(obj.name, obj.value, obj.title)
+          - else if (obj.type == 'checkbox')
+            mixin checkbox(obj.name, obj.value, obj.title)        
+        else 
+            label.control-label.settings-label!= obj.title
+            .controls
+              - if (obj.type == 'title')
+                mixin title(obj.value, obj.title)
+              - else if (obj.type == 'select')               
+                mixin select(obj.name, obj.select, obj.value, obj.title)       
+              - else if (obj.type == 'text')
+                mixin text(obj.value, obj.title, obj.rows)
+              - else if (obj.type == 'editor')
+                .editor_container(style='position:relative;height:' + obj.height + ';width:' + obj.width)
+                  #editor(style='position:absolute;top:0;bottom:0;left:0;right:0;')
+                    = obj.value        
+              - else if (obj.type == 'input_text')
+                mixin input_text(obj.value, obj.name, obj.title)      
+              - else if (obj.type == 'html')
+                textarea.text#html_contents(name='text', rows=20, style='width:95%')!= obj.value
+              - else if (obj.type == 'jade')
+                textarea.text(name='text', style='width:100%;height:260px;')!= obj.value
+              - else if (obj.type == 'fulltext')
+                textarea.text(name='text', style='width:100%;height:260px;')!= obj.value                        
+              - else if (obj.type == 'tag')
+                mixin tag(obj.value)
+              - else if (obj.type == 'li_text')
+                mixin li_text(obj.name, obj.value, obj.title)                
+              - else if (obj.type == 'li_checkbox')
+                mixin li_checkbox(obj.name, obj.value, obj.title)
+              - else if (obj.type == 'checkbox')
+                mixin checkbox(obj.name, obj.value, obj.title)        

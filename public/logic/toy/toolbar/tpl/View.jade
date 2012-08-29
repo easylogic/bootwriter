@@ -1,0 +1,15 @@
+h2!= title
+p!= text
+.btn-toolbar
+  - var start = 1;
+  each group, i in toolbar
+    .btn-group(class= (group[0]) ? 'btn-group-' + (group[0].groupType) : "")
+      each button in group
+        a.btn(class= button.cls, href= button.link ? button.link : '#')
+          if button.icon
+            if button.buttonType
+              i(class= 'icon-' + button.icon).icon-white
+            else
+              i(class= 'icon-' + button.icon)
+            | &nbsp;        
+          != button.title

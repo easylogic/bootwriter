@@ -1,0 +1,19 @@
+if title 
+  h2!= title
+if text 
+  p!= text
+ul.breadcrumb
+  each obj, i in list 
+    li(class= (obj.activeType == 'active') ? 'active' : '')
+      if obj.activeType == 'active'
+        if obj.icon
+          i(class= 'icon-' + obj.icon)
+          | &nbsp;			
+        != obj.title
+      else 
+        a(href= obj.link ? obj.link : "#")
+          if obj.icon
+            i(class= 'icon-' + obj.icon)
+            | &nbsp;				
+          != obj.title
+        span.divider /

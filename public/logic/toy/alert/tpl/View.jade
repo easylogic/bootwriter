@@ -1,0 +1,16 @@
+.alert.alert-block(class= 'alert-' + kind)
+  if title
+    h4!= title
+  if text
+    != text
+  p
+    each button, i in list
+      if i > 0 && !button.buttonBlock
+        | &nbsp; 
+      a.btn(class= button.cls, href= button.link ? button.link : "#")
+        if button.buttonType
+          i(class= 'icon-' + button.icon).icon-white
+        else
+          i(class= 'icon-' + button.icon)
+        | &nbsp;      
+        != button.title

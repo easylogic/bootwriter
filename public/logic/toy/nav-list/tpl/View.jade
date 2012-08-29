@@ -1,0 +1,17 @@
+if title
+  h2!= title
+if text 
+  p!= text
+ul.nav.nav-list.well
+  each obj in list
+    if obj.activeType == 'divider'
+      li.divider
+    else 
+      li(class= obj.activeType)
+        if (obj.activeType == 'nav-header')
+          != obj.title
+        else 
+          a(href= obj.link)
+            i(class= 'icon-' + obj.icon) 
+            | &nbsp;				
+            != obj.title

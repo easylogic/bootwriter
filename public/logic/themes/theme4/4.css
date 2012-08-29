@@ -1,0 +1,18 @@
+
+a {
+    color: #0099B9;
+}
+
+
+body {
+    background-position: left 40px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #0099B9;
+    background-image: url(bg.gif);
+}
+  
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+    font-weight: bold;
+    color: white;
+}      

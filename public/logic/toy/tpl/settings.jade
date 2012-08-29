@@ -1,0 +1,76 @@
+include mixin_list
+
+.modal-header
+  h3.modal-header-title
+    != App.list[type].name
+  ul.nav.nav-pills.modal-header-menu.pull-right
+    - var i = 1;
+    li.active: a(href='#data', data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Data
+    if isThemes
+      li: a(href='#themes',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Themes
+    li: a(href='#skin',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Skin
+    if isList  
+      li
+        a(href='#list',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) 
+          | List &nbsp;
+          span.badge.badge-info!= list.length  
+    if isUpload  
+      li
+        a(href='#upload',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) 
+          | Upload &nbsp;
+
+  form.form-inline(style='display:inline;margin-left:10px;margin-right:10px;margin-top:4px;')
+    select.span1.spanarea(data-placeholder="Span",style='width:70px;')
+      option(value='')
+      each list_value in span_list
+        - if (list_value == span)
+          option(value= list_value, selected='selected')= list_value
+        - else 
+          option(value= list_value)= list_value
+    | &nbsp;              
+    select.span1.offsetarea(data-placeholder="Offset",style='width:70px;')
+      option(value='')
+      each list_value in span_list
+        - if (list_value == offset)
+          option(value= list_value, selected='selected')= list_value
+        - else 
+          option(value= list_value)= list_value
+    | &nbsp;            
+    select.span1.hspanarea(data-placeholder="Height",style='width:70px;')
+      option(value='')
+      each list_value in span_list
+        - if (list_value == hspan)
+          option(value= list_value, selected='selected')= list_value
+        - else 
+          option(value= list_value)= list_value            
+.modal-body
+  .tab-content
+    if isList
+      if isTable
+        .tab-pane.fade#list
+          include settings_table
+      else
+        .tab-pane.fade#list
+          include settings_list  
+    if isUpload
+      .tab-pane.fade#upload
+        include upload
+    if isThemes
+      .tab-pane.fade#themes
+        include themes
+    .tab-pane.fade#skin
+      include skin  
+    .tab-pane.fade.in.active#data
+      include data 
+.modal-footer
+  if !isRoot
+    a.btn.btn-danger.remove.pull-left
+      i.icon-trash.icon-white
+      | &nbsp;Delete
+  a.btn.btn-primary.save(title='Alt + s')
+    i.icon-share.icon-white   
+    | &nbsp;<u>S</u>ave
+  a.btn.btn-inverse.bClose(data-dismiss="modal")
+    i.icon-stop.icon-white   
+    | &nbsp;Close
+
