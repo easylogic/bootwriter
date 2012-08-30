@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>EasyLogic</title>
+        <meta http-equiv="X-UA-Compatible" content="IE-EmulateIE8">
+        <!--[if lt IE 9]><script src="/lib/html5.js">   </script><![endif]-->
+        <style>
+            body {
+                padding-top: 50px;
+            }
+        </style>
+        <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+        <link id="userThemes" rel="stylesheet" href="/logic/themes/theme1/1.css">
+    </head>
+    <body>
+        <script type="text/javascript" src="/lib/json2.js"></script>
+        <script type="text/javascript" src="/lib/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="/lib/backbone-min.js"></script>
+        <script type="text/javascript" src="/lib/require-2.0.js"></script>
+        <script type="text/javascript" src="/logic/main-built.js"></script>
+        <link rel="stylesheet" href="/lib/google-code-prettify/prettify.css">
+        <script type="text/javascript" src="/lib/jquery.bPopup.min.js"></script>
+        <script type="text/javascript" src="/lib/jquery.ui/jquery-ui-1.8.20.custom.min.js"></script>
+        <link rel="stylesheet" href="/lib/jquery.ui/smoothness/jquery-ui-1.8.20.custom.css">
+        <script type="text/javascript" src="/lib/jquery.ui/jquery.ui.touch-punch.min.js"></script>
+        <link rel="stylesheet" href="/lib/chosen/chosen.css">
+        <script type="text/javascript" src="/lib/chosen/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="/lib/markdown.js"></script>
+        <script type="text/javascript" src="/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="/lib/tiny_mce/jquery.tinymce.js"></script>
+        <script type="text/javascript" src="/lib/less-1.3.0.min.js"></script>
+        <script type="text/javascript" src="/lib/google-code-prettify/prettify.js"></script>
+        <script type="text/javascript">
+            require.config({
+                paths : {
+                    'jade' : '/lib/requirejs.plugin/jade-0.25',
+                    'text' : '/lib/requirejs.plugin/text',
+                    'jadeRuntime' : '/lib/requirejs.plugin/jadeRuntime'
+                }
+            });
+
+            // global object
+            var App = {
+                mode : 'write'
+            };
+        </script><script type="text/javascript" src="/lib/ace/ace.js"></script>
+        <div class="container">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div style="height:50px;" class="container">
+                        <a data-toggle="collapse" data-target="#main-collapse" class="btn btn-navbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a href="/" style="padding:0px;" class="brand"> 
+                            <img src="/logic/themes/gear.png" style="display:inline-block;margin-top:-4px;margin-right:10px;">
+                            <h2 style="display:inline;color:#eeeeee;padding-top:3px;padding-left:5px;padding-right:5px;">EasyLogic</h2>
+                        </a>
+                        <div id="main-collapse" class="nav-collapse">
+                            <ul class="nav">
+                                <li class="divider-vertical"></li>
+                                <li id="writeTool" style="margin-top:2px;" class="btn-toolbar">
+                                    <div class="btn-group">
+                                        <a href="/write" id="writeButton" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a>
+                                    </div>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li id="boxeditor" class="boxeditor btn-toolbar"></li>
+                                <li class="divider-vertical"></li>
+                                <li id="toolbar" class="toolbar"></li>
+                                <li class="divider-vertical"></li>
+                                <li id="menubox" class="menubox btn-toolbar"></li>
+                                <li class="divider-vertical"></li>
+                                <li id="boxset" class="boxset btn-toolbar"></li>
+                                <li class="divider-vertical"></li>
+                                <li id="settings" class="settings btn-toolbar"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container wrapper">
+            <div class="row logic-main">
+                <div class="span7 logic-view"></div>
+                <div class="span3 logic-control"></div>
+            </div>
+            <style>
+                .title_text {
+                    font-size: 30px;
+                    line-height: 36px;
+                    border: 0px;
+                }
+
+                .untitled {
+                    color: #eeeeee;
+                }
+
+                .titlebar {
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                }
+
+                .viewText {
+                    border-radius: 3px;
+                    margin-bottom: 18px;
+                    padding: 10px;
+                }
+
+                .logic-comp-tab .viewText, .logic-comp-carousel .viewText, .logic-comp-nav-list .viewText, .logic-comp-table .viewText, .logic-comp-accordion .viewText, .logic-comp-pagination .viewText, .logic-comp-hero-unit .viewText, .logic-comp-alert .viewText, .logic-comp-code .viewText, .logic-comp-breadcrumb .viewText, .logic-comp-page-header .viewText, .logic-comp-stack .viewText {
+                    padding: 0px;
+                }
+
+                .logic-comp-page-header .viewText {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+                .logic-comp-tab .viewText, .logic-comp-accordion .viewText, .logic-comp-progress .viewText, .logic-comp-nav-list .viewText, .logic-comp-carousel .viewText, .logic-comp-page-header .viewText, .logic-comp-pagination .viewText {
+                    background: none;
+                }
+
+                .btn-mini {
+                    padding: 1px;
+                }
+
+                .btn-toolbar {
+                    margin-top: 2px;
+                    margin-bottom: 0px;
+                }
+
+                .logic-drop-active-side {
+                    background: red;
+                }
+
+                .logic-drop-active-middle {
+                    background: yellow;
+                }
+
+                .modal {
+                    margin: 0px;
+                    top: 0px;
+                    left: 0px;
+                }
+
+                .modal-header .nav-pills > .active > a, .modal-header .nav-pills > .active > a:hover {
+                    background-color: #333;
+                }
+
+                .modal-body {
+                    max-height: none;
+                }
+
+                .mdoal-body label.checkbox {
+                    display: inline-block;
+                }
+
+                .modal-header-menu {
+                    display: inline-block;
+                    margin-bottom: -5px;
+                }
+
+                .modal-header-title {
+                    display: inline-block;
+                    margin-right: 20px;
+                }
+
+                .select_align {
+                    margin-top: 5px;
+                    margin-left: 0;
+                    list-style: none;
+                    cursor: pointer;
+                    overflow: hidden; /* clear floats */
+                }
+
+                .select_toy {
+                    margin-top: 5px;
+                    margin-left: 10px;
+                    list-style: none;
+                    cursor: pointer;
+                    overflow: hidden; /* clear floats */
+                }
+
+                .toy {
+                    display: inline;
+                    float: left;
+                }
+
+                .logic-comp-box.select_box .viewText, .select_box .viewText {
+                    border: 0px;
+                }
+
+                .select_box .viewText {
+                    border: 1px dashed black;
+                }
+
+                .resizable-helper {
+                    border: 1px dashed #cccccc;
+                }
+
+                .select_box_container {
+                    border-top: 1px dashed #cccccc;
+                    border-bottom: 1px dashed #cccccc;
+                }
+
+                .list-row.alert {
+                    padding: 2px;
+                    margin-bottom: 4px;
+                }
+
+                .column.alert {
+                    padding: 2px;
+                    margin-bottom: 4px;
+                }
+
+                .wrapper {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    background: url(/logic/themes/wash-white-30.png);
+                }
+
+                .settings-label {
+                    background-color: #333;
+                    color: white;
+                    font-weight: bold;
+                    -webkit-border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    border-radius: 3px;
+                    padding: 5px;
+                }
+
+                .form-horizontal .control-group {
+                    margin-bottom: 10px;
+                }
+
+                .add-toys ul li div {
+                    border: 2px solid white;
+                }
+
+                .add-toys ul li.active div {
+                    border: 2px solid black;
+                }
+
+            </style>
+            <script type="text/javascript">
+                Backbone.sync = function(method, model, options){
+                    options.success(model.toJSON());
+                };
+                require(['logic/main'], function(Logic) {
+                    Logic.initialize('');
+                });
+            </script>
+            <style>
+                a.themes-image.active {
+                    background-color: #0283B2;
+                    background-repeat: repeat-x;
+                    background-image: -webkit-linear-gradient(top,#019AD2 0,#0283B2 100%);
+                    background-image: -ms-linear-gradient(top,#019AD2 0,#0283B2 100%);
+                    background-image: -o-linear-gradient(top,#019AD2 0,#0283B2 100%);
+                    background-image: linear-gradient(top,#019AD2 0,#0283B2 100%);
+                    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+                }
+
+            </style>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div style="height:10px;"></div>
+                <ul class="unstyled">
+                    <li class="copyright">
+                        © 2012 easylogic.co.kr
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>
