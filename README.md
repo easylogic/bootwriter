@@ -47,6 +47,17 @@ Bootstrap Writer 의 클라이언트 기본 구조는 Requirejs, Backbone.js, Ja
 [Sample](http://blog.easylogic.co.kr/view/503cda88000000583e000006)
 
 
+# 글쓰기 컴포넌트만 쓸려면? 
+
+`public` 
+
+디렉토리에 있는 파일만 따로 가져다가 쓰시면 됩니다. 
+
+`write.html`  을 보시면 실제로 출력된 부분이 따로 만들었습니다. 
+
+실행하시면 입력도구 자체는 그대로 사용하실 수 있습니다. 
+
+만들고 다른 곳으로 보낼때도 활용을 할 수 있을것 같네요. 
 
 
 # 글쓰기를 바꿔보자? 
