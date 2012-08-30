@@ -1,19 +1,18 @@
-.modal.hide
-  .modal-header
-    h2.modal-header-title Add Toys
-    ul.nav.nav-pills.modal-header-menu.pull-right
-      each obj, key in App.menubox  
-        li(class= key == 'basecss' ? 'active' : ''): a(href= '#' + key, data-toggle='tab')!= obj.name 
-  .modal-body
-    .tab-content
-      each obj, key in App.menubox
-        .tab-pane(class= key == 'basecss' ? 'active' : '', id= key)
-          ul.thumbnails(style='margin-left:0px;')
-            each name in obj.list
-              - var toy = App.list[name]
-              li.span2(style='text-align:center;width:108px;margin-bottom:16px;cursor:pointer;', data-name='toy', data-type= toy.type)
-                div(class= App.list[name].view, style='padding: 20px 0px;') 
-                  a(href='#', style='cursor:pointer;color:black')
-                    i(class= toy.icon, style='margin-bottom:5px;')
-                    br 
-                    != toy.name
+.modal-header
+  h2.modal-header-title Add Toys
+  ul.nav.nav-pills.modal-header-menu.pull-right
+    each obj, key in App.menubox  
+      li(class= key == 'basecss' ? 'active' : ''): a(href= '#' + key, data-toggle='tab')!= obj.name 
+.modal-body
+  .tab-content
+    each obj, key in App.menubox
+      .tab-pane(class= key == 'basecss' ? 'active' : '', id= key)
+        ul.thumbnails(style='margin-left:0px;')
+          each name in obj.list
+            - var toy = App.list[name]
+            li.span2(style='text-align:center;width:108px;cursor:pointer;', data-name='toy', data-type= toy.type)
+              div(class= App.list[name].view, style='padding: 20px 0px;') 
+                a(href='#', style='cursor:pointer;color:black')
+                  i(class= toy.icon, style='margin-bottom:5px;')
+                  br 
+                  != toy.name

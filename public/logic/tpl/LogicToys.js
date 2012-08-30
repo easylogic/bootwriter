@@ -4,7 +4,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="modal hide"><div class="modal-header"><h2 class="modal-header-title">Add Toys</h2><ul class="nav nav-pills modal-header-menu pull-right">');
+buf.push('<div class="modal-header"><h2 class="modal-header-title">Add Toys</h2><ul class="nav nav-pills modal-header-menu pull-right">');
 // iterate App.menubox  
 ;(function(){
   if ('number' == typeof App.menubox  .length) {
@@ -54,7 +54,7 @@ buf.push('><ul style="margin-left:0px;" class="thumbnails">');
 
  var toy = App.list[name]
 buf.push('<li');
-buf.push(attrs({ 'style':('text-align:center;width:108px;margin-bottom:16px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
+buf.push(attrs({ 'style':('text-align:center;width:108px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
 buf.push('><div');
 buf.push(attrs({ 'style':('padding: 20px 0px;'), "class": (App.list[name].view) }, {"class":true,"style":true}));
 buf.push('> <a href="#" style="cursor:pointer;color:black"><i');
@@ -70,7 +70,7 @@ buf.push('</a></div></li>');
 
  var toy = App.list[name]
 buf.push('<li');
-buf.push(attrs({ 'style':('text-align:center;width:108px;margin-bottom:16px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
+buf.push(attrs({ 'style':('text-align:center;width:108px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
 buf.push('><div');
 buf.push(attrs({ 'style':('padding: 20px 0px;'), "class": (App.list[name].view) }, {"class":true,"style":true}));
 buf.push('> <a href="#" style="cursor:pointer;color:black"><i');
@@ -100,7 +100,7 @@ buf.push('><ul style="margin-left:0px;" class="thumbnails">');
 
  var toy = App.list[name]
 buf.push('<li');
-buf.push(attrs({ 'style':('text-align:center;width:108px;margin-bottom:16px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
+buf.push(attrs({ 'style':('text-align:center;width:108px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
 buf.push('><div');
 buf.push(attrs({ 'style':('padding: 20px 0px;'), "class": (App.list[name].view) }, {"class":true,"style":true}));
 buf.push('> <a href="#" style="cursor:pointer;color:black"><i');
@@ -116,7 +116,7 @@ buf.push('</a></div></li>');
 
  var toy = App.list[name]
 buf.push('<li');
-buf.push(attrs({ 'style':('text-align:center;width:108px;margin-bottom:16px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
+buf.push(attrs({ 'style':('text-align:center;width:108px;cursor:pointer;'), 'data-name':('toy'), 'data-type':(toy.type), "class": ('span2') }, {"style":true,"data-name":true,"data-type":true}));
 buf.push('><div');
 buf.push(attrs({ 'style':('padding: 20px 0px;'), "class": (App.list[name].view) }, {"class":true,"style":true}));
 buf.push('> <a href="#" style="cursor:pointer;color:black"><i');
@@ -134,7 +134,7 @@ buf.push('</ul></div>');
   }
 }).call(this);
 
-buf.push('</div></div></div>');
+buf.push('</div></div>');
 }
 return buf.join("");
 };

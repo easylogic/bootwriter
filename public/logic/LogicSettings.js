@@ -16,6 +16,8 @@ define([
             }
         },
         
+        
+        
         settingsToy: function(e) {
           if (App.toy != null) {
               App.toy.selectEdit(e);

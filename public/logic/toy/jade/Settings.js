@@ -5,7 +5,7 @@ define([
          
         getPreview: function(obj) { 
             obj.text = this.editor.getValue();
-            
+
             var jadeTpl = require("jade").get().compile(obj.text); 
             obj.viewText = jadeTpl();   
 
@@ -13,6 +13,7 @@ define([
         },
         
         onShow: function() {
+            require(['jade'])            
             this.setEditor('editor', 'textile');
         },        
         

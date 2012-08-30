@@ -109,11 +109,13 @@ define([
                 e.stopPropagation();
             })
             
+            var self = this;
+                            
             // binding key event 
             $(document).keydown(function(e){
                 
                 if (App.mode == 'view') return false; 
-                
+
                 if (!$('.bModal').length) {
 
                     if (App.toy != null){
@@ -200,6 +202,16 @@ define([
                             }
                         }
                         
+                    } else if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+                         if ( 37 <= e.keyCode && e.keyCode <= 40 ) {
+                            if ($('.add-toys').length) {
+                                self.menubox.toys.moveSelectToy(e.keyCode);
+                            }
+                         }  else { 
+                            if ($('.add-toys').length) {
+                                self.menubox.toys.addToy();
+                            }
+                         }
                     }
                 } 
  
