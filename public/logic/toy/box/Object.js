@@ -36,7 +36,8 @@ define([
         
         onRender: function(data) { 
             if (this.isRoot()) { 
-                App.main.setTitle(data.title, data.tag);
+                
+                App.main.setTitle(data.title, data.tag);                    
                 
                 if (data.themes > 0){
                     $('#userThemes').attr('href', "/logic/themes/theme" + data.themes + "/" + data.themes +  ".css" );  

@@ -12,5 +12,7 @@
     , "jade": ">= 0.0.1"
     , "mongolian": ">= 0.0.1"
     , "everyauth": "0.2.32"
+    , "jade-amd": "*"
+    , "requirejs": "*"
   }
 }
