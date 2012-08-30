@@ -8,6 +8,7 @@ define([
     return Backbone.View.extend({
         initialize: function(opt) { 
             
+            App.main       = this;
             this.mode       = App.mode;
             this.toolbar    = new LogicToolbar({ _id : opt._id});
             this.menubox    = new LogicMenuBox();

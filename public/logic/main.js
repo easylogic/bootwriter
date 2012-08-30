@@ -37,19 +37,6 @@ define([
              } 
 
              window.App = _.extend(window.App, {
-                 main: { 
-                   contents: { 
-                     rootBox: { 
-                        model: { 
-                            id : 'root',
-                            get: function() { 
-                                return false;     
-                            }   
-                        }    
-                     }    
-                   }  
-                 },
-                 
                  GridWidth: 60,
                  GridGutter: 20,
                  MaxSpan: 12,
