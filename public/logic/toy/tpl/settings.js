@@ -117,7 +117,7 @@ buf.push('</h3><ul class="nav nav-pills modal-header-menu pull-right">');
 buf.push('<li class="active"><a');
 buf.push(attrs({ 'href':('#data'), 'data-toggle':('tab'), 'rel':('tooltip'), 'title':('Alt + ' + (i++)) }, {"href":true,"data-toggle":true,"rel":true,"title":true}));
 buf.push('>Data</a></li>');
-if ( isThemes)
+if ( isThemes && isRoot)
 {
 buf.push('<li><a');
 buf.push(attrs({ 'href':('#themes'), 'data-toggle':('tab'), 'rel':('tooltip'), 'title':('Alt + ' + (i++)) }, {"href":true,"data-toggle":true,"rel":true,"title":true}));
@@ -341,7 +341,7 @@ if ( isUpload)
 {
 buf.push('<div id="upload" class="tab-pane fade"><form name="upload" action="/uploads" method="post" enctype="multipart/form-data" target="image_upload"><fieldset style="padding-left:20px"><input type="file" name="image" class="file"/><button type="submit" class="btn btn-warning upload">Upload</button><iframe name="image_upload" height="50px" frameborder="0" class="span7"></iframe></fieldset></form></div>');
 }
-if ( isThemes)
+if ( isThemes && isRoot)
 {
 buf.push('<div id="themes" class="tab-pane fade"><ul style="width:700px;margin-left:20px;" class="thumbnails">');
  for(var i = 1; i <= 20; i++ )

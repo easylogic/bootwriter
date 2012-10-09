@@ -5,11 +5,6 @@ define([
 
         isThemes: true,
 
-        rowTypeList : [
-            'default',
-            'fluid'
-        ],
-        
         onShow: function() { 
             var index = this.parent.model.get('themes');
             
@@ -18,7 +13,7 @@ define([
 
         getAttributeData : function(value, elem) { 
             var data = {
-                rowType     : elem.find('.rowType option:selected').val()
+                layout     : elem.find('.layout option:selected').val()
             };
             
             if (this.isRoot()) { 
@@ -33,14 +28,12 @@ define([
         getLocalConfig : function(config) {
             
             var infoList = [
-                { type : 'title', value : config.title },
-                { type : 'text', value : config.text },
-                { type : 'tag', value: config.tag }
+                { type : 'title', value : config.title, full: true },
+                { type : 'text', value : config.text, full: true },
+                { type : 'tag', value: config.tag, full: true }
             ];
             
-            if (this.isRoot()){
-                infoList.unshift({ type : 'select', value: config.rowType, select: [ 'default', 'fluid'], name: 'rowType', title: 'Row Type'  });
-            }
+            infoList.unshift({ type : 'select', value: config.layout, select: [ 'flow', 'fluid'], name: 'layout', title: 'Layout'  });
              
             return _.extend(config, {
                 infoList: infoList                       

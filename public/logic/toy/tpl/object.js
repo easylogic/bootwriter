@@ -12,8 +12,12 @@ buf.push(null == __val__ ? "" : __val__);
 buf.push('</style>');
 }
 buf.push('<div');
-buf.push(attrs({ 'id':(cid) }, {"id":true}));
+buf.push(attrs({ 'id':(cid), "class": (className) }, {"id":true,"class":true}));
 buf.push('>');
+ if (App.mode == 'write' && !isRoot)
+{
+buf.push('<div class="menu_list"><div class="menu_left"></div><div class="menu_right"></div><div class="menu_center"></div><span class="simple-view simple-view-left badge"></span><span class="simple-view simple-view-right badge"></span></div>');
+}
  if (!isContainer)  
 {
 buf.push('<div');
@@ -26,7 +30,7 @@ buf.push('</div></div>');
  if (isContainer)
 {
 buf.push('<div');
-buf.push(attrs({ 'data-cid':(cid), "class": ('logic-comp-childpoint') + ' ' + ((rowType == 'fluid') ? 'row-fluid' : 'row') }, {"class":true,"data-cid":true}));
+buf.push(attrs({ 'data-cid':(cid), "class": ('logic-comp-childpoint') }, {"data-cid":true}));
 buf.push('></div>');
 }
 buf.push('</div>');

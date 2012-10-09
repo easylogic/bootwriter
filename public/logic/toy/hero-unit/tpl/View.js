@@ -7,10 +7,10 @@ var interp;
 buf.push('<div class="hero-unit">');
 if ( title)
 {
-buf.push('<h2>');
+buf.push('<h1>');
 var __val__ = title
 buf.push(null == __val__ ? "" : __val__);
-buf.push('</h2>');
+buf.push('</h1>');
 }
 if ( text)
 {
@@ -29,6 +29,8 @@ buf.push('<p>');
 buf.push('&nbsp;<a');
 buf.push(attrs({ 'href':(button.link ? button.link : "#"), "class": ('btn') + ' ' + ('btn-large') + ' ' + (button.cls) }, {"class":true,"href":true}));
 buf.push('>');
+if ( button.icon)
+{
 if ( button.buttonType)
 {
 buf.push('<i');
@@ -42,6 +44,7 @@ buf.push(attrs({ "class": ('icon-' + button.icon) }, {"class":true}));
 buf.push('></i>');
 }
 buf.push('&nbsp;      ');
+}
 var __val__ = button.title
 buf.push(null == __val__ ? "" : __val__);
 buf.push('</a>');
@@ -53,6 +56,8 @@ buf.push('</a>');
 buf.push('&nbsp;<a');
 buf.push(attrs({ 'href':(button.link ? button.link : "#"), "class": ('btn') + ' ' + ('btn-large') + ' ' + (button.cls) }, {"class":true,"href":true}));
 buf.push('>');
+if ( button.icon)
+{
 if ( button.buttonType)
 {
 buf.push('<i');
@@ -66,6 +71,7 @@ buf.push(attrs({ "class": ('icon-' + button.icon) }, {"class":true}));
 buf.push('></i>');
 }
 buf.push('&nbsp;      ');
+}
 var __val__ = button.title
 buf.push(null == __val__ ? "" : __val__);
 buf.push('</a>');

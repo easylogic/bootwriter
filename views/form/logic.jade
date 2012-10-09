@@ -122,14 +122,29 @@ style
       float: left;
   }
 
-  .logic-comp-box.select_box .viewText
-  ,.select_box .viewText {
-      border:0px;
-  }
-  
   .select_box .viewText {
       border:1px dashed black;
   }  
+  
+  .select_box.logic-comp-box { 
+    border:1px solid red;
+  }
+
+  .select_box.logic-comp-box.rootBox { 
+    border:0px;
+  }
+    
+  .select_box.logic-comp-box .logic-comp-childpoint .viewText { 
+    border:0px;
+  }  
+  
+  .logic-comp-box.notRootBox { 
+    background:rgba(255, 0, 0, 0.5);
+  }
+
+  .logic-comp-box.notRootBox.droppable_over { 
+    background:rgba(255, 255, 0, 0.5);
+  }
   
   .resizable-helper {
       border: 1px dashed #cccccc;
@@ -178,7 +193,77 @@ style
     border: 2px solid black;
   }  
   
+  .draggable_helper { 
+    z-index: 999999;
+    width: 30px;
+    height: 30px;
+    background: red;
+  }
+  
+  .droppable_over { 
+    
+  }
+  
+  .simple-view-right {
+    display:none;
+    position:absolute;
+    right:0px;
+    top:0px;
+  }
+  
+  .simple-view-left {
+    display:none;
+    position:absolute;
+    left:0px;
+    top:0px;
+  }  
+  
+  .menu_left { 
+    display:none;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:25%;
+    height:100%;
+    background-color: rgba(214, 255, 0, 0.2);
+  }
+  
+  .menu_right { 
+    display:none;    
+    position:absolute;
+    right:0px;
+    top:0px;
+    width:25%;
+    height:100%;
+    background-color: rgba(255, 255, 0, 0.34);
+  }  
 
+  .menu_center { 
+    display:none;    
+    position:absolute;
+    left: 25%;
+    right:25%;
+    top:0px;
+    width:50%;
+    height:100%;
+    background-color: rgba(255, 255, 255, 0.34);
+  }  
+
+  .droppable_over.left .menu_left {
+    display:block;
+  }
+
+
+  .droppable_over.right .menu_right {
+    display:block;
+  }
+  
+  .droppable_over.center .menu_center {
+    display:block;
+  }  
+ 
+
+  
 script(type='text/javascript')
   require([ 'logic/main' ], function (Logic) {  
     Logic.initialize('#{id}'); 

@@ -4,6 +4,7 @@ define([], function(){
         idAttribute: "_id",
         defaults : {
             isRoot: false,
+            className : '',
             title: '',
             span : 12,          // 기본 넓이
             hspan: '',          // 기본 높이  

@@ -15,10 +15,12 @@ define([
             var data = obj;
           
             data.title = this.htmlEntities(obj.title);
-		    data.text = markdown.toHTML(obj.text);
+		    data.text = this.htmlEntities(obj.text);
             
             
-            data.list = this.setButtonAttr(data.list);            
+            data.list = this.setButtonAttr(data.list);         
+            
+            console.log(data.list);   
             
             obj.viewText = View(data);
             
@@ -28,8 +30,8 @@ define([
         getLocalConfig : function(config) { 
             return _.extend(config, {
                 infoList: [
-                    { type : 'title', value : config.title },
-                    { type : 'text', value: config.text }
+                    { type : 'title', value : config.title, title: 'Title' },
+                    { type : 'text', value: config.text, title: 'Content' }
                 ]
             })
         }        

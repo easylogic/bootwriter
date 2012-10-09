@@ -1,8 +1,15 @@
 - if (typeof skinText != 'undefined' && skinText) 
   style(type='text/css')!= skinText
-div(id= cid)
+div(id= cid, class= className)
+  - if (App.mode == 'write' && !isRoot)
+    .menu_list
+      .menu_left
+      .menu_right
+      .menu_center
+      span.simple-view.simple-view-left.badge
+      span.simple-view.simple-view-right.badge
   - if (!isContainer)  
     .logic-comp-viewpoint(data-cid= cid, id= cid)
       .viewText!= viewText
   - if (isContainer)
-    .logic-comp-childpoint(data-cid= cid, class= (rowType == 'fluid') ? 'row-fluid' : 'row')
+    .logic-comp-childpoint(data-cid= cid)

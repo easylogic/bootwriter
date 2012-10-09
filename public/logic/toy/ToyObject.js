@@ -9,6 +9,79 @@ define([
             'doubletab .viewText'          : 'selectEdit'
         },
         
+        keyMap: function(e) {
+            var code = e.keyCode;
+            
+             if (e.shiftKey && e.keyCode == 187) { // plus(+)
+                $('.plus-btn').click();
+            } else if (e.keyCode == 46) {       // delete 
+                if (confirm("Delete a toy really?")) {
+                    this.remove();
+                    this.$el.remove();
+                    App.initSelectToy();
+                    delete this;
+                }
+            } else if (e.keyCode == 13) { // enter 
+                this.selectEdit(e);
+            } else if (e.keyCode == 39) {       // right
+                
+                if (e.ctrlKey && e.shiftKey) {       // ctrl + shift + right  
+                    this.moveNext();
+                } else if (e.ctrlKey) {       // ctrl + right 
+                    this.changeSpan(1);
+                } else if (e.shiftKey) {       // shift + right  
+                    this.changeOffset(1);
+                } else {
+                    var obj = this.next();
+                    
+                    if (!obj) { 
+                        if (this.parent.isContainer && !this.parent.isRoot()){
+                            this.parent.selectNext();
+                            return false;
+                        } else {
+                            obj = App.main.contents.rootBox.firstChild();    
+                        }
+                    }
+                    
+                    if (obj) {
+                        obj.setSelectedToy();
+                    }
+                }
+                
+            } else if (e.keyCode == 37) {       // left
+                
+                if (e.ctrlKey  && e.shiftKey) {       // ctrl + shift + left  
+                    this.movePrev();
+                } else if (e.ctrlKey) {       // ctrl + left  
+                    this.changeSpan(-1);
+                } else if (e.shiftKey) {       // shift + left 
+                    this.changeOffset(-1);
+                } else {
+                    var obj = this.prev();
+                    
+                    if (!obj) { 
+                        if (this.parent.isContainer && !this.parent.isRoot()){
+                            this.parent.selectPrev();
+                            return false;
+                        } else {
+                            obj = App.main.contents.rootBox.lastChild();    
+                        }                                
+                    }
+                    
+                    if (obj) {
+                        obj.setSelectedToy();
+                    }
+                }
+
+            } else if (e.keyCode == 40) {       // down
+                if (this.isContainer){
+                    this.selectChild();
+                } 
+            }             
+        },
+        
+        
+        
         appendBeforeObject: function(comp) {
            if (!this.isRoot() && this.parent.isContainer) {
                 this.parent.beforeComp(this, comp);
@@ -154,7 +227,12 @@ define([
              
             this.model.set('span', temp);
             
-            this.resetSpan();
+            //this.resetSpan();
+            //this.parent.doLayout(this);
+            this.parent.resetLayout(this);
+            this.viewSimpleInfo();
+            this.hideSimpleInfo();
+            
             this.save();
         },
         
@@ -174,38 +252,40 @@ define([
              
             this.model.set('offset', temp);
             
-            this.resetOffset();
-            this.save();
-        },        
-        
-        resetSpan: function(span) {
-            span = (span == undefined) ? this.model.get('span') : span;
+            //this.resetOffset();
+
+            this.parent.resetLayout(this);
+            this.viewSimpleInfo();
+            this.hideSimpleInfo();
                         
-            // if span exists
-            this.$el.parent().removeClass(function(index, css){
-                var matches = css.match(/span\d+/g) || [];
-                return matches.join(' ');   
-            });               
-            
-            if (span > 0) {
-                this.$el.parent().addClass('span' + span, 'slow').attr('data-cid', this.cid);     
-            }
-               
+            this.save();
         },
         
-        resetOffset: function(offset) {
-            offset = (offset == undefined) ? this.model.get('offset') : offset;            
-            // if offset exists
-            this.$el.parent().removeClass(function(index, css){
-                var matches = css.match(/offset\d+/g) || [];
-                return matches.join(' ');   
-            });               
-            
-            if (offset > 0) {
-                this.$el.parent().addClass('offset' + offset).attr('data-cid', this.cid);        
-            }
-        },        
         
+        
+        setSimpleInfo: function(left, right) {
+            if (left) this.$('.menu_list .simple-view-left').html(left);
+            if (right) this.$('.menu_list .simple-view-right').html(right);
+        },
+        
+        viewSimpleInfo: function(left, right) {
+            var left = left || this.model.get('offset');
+            var right = right || this.model.get('span');
+            
+            this.setSimpleInfo(left, right);
+            
+            if (left) this.$('.menu_list .simple-view-left').fadeIn();
+            if (right) this.$('.menu_list .simple-view-right').fadeIn();    
+        },
+        
+        hideSimpleInfo: function(time) {
+            time = time || 200;
+            
+            var self = this; 
+            setTimeout(function(){  self.$('.menu_list .simple-view').fadeOut(); }, time);
+            
+        },
+       
         show: function(isSettings) { 
             this.$el.fadeIn('fast');
 
@@ -267,14 +347,7 @@ define([
         setStyle: function(data) { 
             var obj = this.getViewPoint();
             
-            this.resetSpan(data.span);          
-            this.resetOffset(data.offset);          
             this.resetHSpan(data.hspan);          
-            
-            if (App.mode == 'write') {
-                //this.$el.css('cursor', 'pointer');
-                //this.$el.addClass(App.list[this.type].view.replace("btn-", "back-"));
-            }
                 
         },
         
@@ -320,6 +393,35 @@ define([
             
         },
         
+        selectNext: function() {
+            var obj = this.next();
+            if (!obj) {
+                obj = App.main.contents.rootBox.firstChild();
+            }
+ 
+            if (obj) { 
+                obj.setSelectedToy();    
+            }
+        },
+        
+        selectPrev: function() {
+            var obj = this.prev();
+            if (!obj) {
+                obj = App.main.contents.rootBox.lastChild();
+            }
+             
+            if (obj) {
+                obj.setSelectedToy();
+            }
+        },
+        
+        selectChild: function() { 
+            var obj = this.firstChild();
+            if (obj) { 
+                obj.setSelectedToy();
+            }
+        },
+        
         initContextMenu: function() {
            this.$el.popover('destroy'); 
         },
@@ -338,178 +440,200 @@ define([
                  
                 this.$el.click(function(e){
                     e.stopPropagation();  
-                    
                     App.initContextMenu();
-                    
                     self.setSelectedToy();
                     return false; 
                 })              
                 
-                /*
-                this.$el.on('contextmenu', function(e){
-                    e.stopPropagation();                    
-                    if (e.button == 2)  {       // context menu , right click 
-                        
-                        App.initConextMenu();
-                        
-                        $(this).popover({
-                            
-                            placement: 'bottom',
-                            trigger: 'manual',
-                            title: function() {
-                                return App.list[self.type].name;  
-                            },
-                            content: function() { 
-                                return "<a href=''>fdsafdsafds</a>";   
-                             }
-                        }).popover('show');
-                    }
-                    
-                    self.setSelectedToy();
-                    return false; 
-                }) */
-                
-                var grid = App.GridWidth + App.GridGutter;
-                
-                var resizableReset = function(e, ui) { 
-                    
-                    var handle = $(this).css("cursor").split("-")[0];
-                    
-                    if (handle == "w"){
-                        
-                        var offset = Math.floor(( Math.abs(ui.position.left) + App.GridGutter)/(App.GridGutter + App.GridWidth));
-                        
-                        if (ui.position.left > 0) { 
-                            offset = App.offsetOrigin + offset  ;
-                        } else { 
-                            offset = App.offsetOrigin - offset ;    
-                        }
-
-                        if (offset < 0) offset = 0;
-                        
-                        var span = App.spanOrigin - offset;
-                        
-                        self.$el.css({ top: "", left: "", width: "", height: "" })
-
-                        if (e.ctrlKey) {
-                            self.resetOffset(offset);    
-                            self.resetSpan(span);
-                        } else { 
-                            self.resetOffset(offset);
-                        }
-                            
-                        App.offset = offset;
-                        App.span = span;
-                        App.resizableMode = "w";                        
-                    } else { 
-                        var span = Math.floor((ui.size.width + App.GridGutter)/(App.GridGutter + App.GridWidth));
-                        
-                        if (span > 12) span = 12;
-                        
-                        self.$el.css({ top: "", left: "", width: "", height: "" })
-                        
-                        self.model.set({span: span});
-                        self.resetSpan();
-                        App.resizableMode = "e";
-                    }
-                };
-                
-                
-                this.$el.resizable( "destroy" ).resizable({
-                    minHeight: App.GridWidth,
-                    minWidth: App.GridWidth,
-                    containment: ".logic-comp-childpoint",
-                    handles: "e,w",
-                    distance: App.GridGutter,
-                    grid : grid,
-                    start: function(e, ui) {
-                        var handle = $(this).css("cursor").split("-")[0];
-                    
-                        if (handle == "w"){
-                            App.spanOrigin = parseInt(self.model.get('offset') || 0) + parseInt(self.model.get('span') || 0); 
-                            App.offsetOrigin = parseInt(self.model.get('offset') || 0); 
-                        }
-                        
-                    },
-                    
-                    resize: function(e, ui) { 
-                        resizableReset.call(this, e, ui);
-                    },
-                    stop: function(e, ui) {
-                        if (App.resizableMode == 'w') {
-                            if (e.ctrlKey){
-                                self.model.set('offset', App.offset);    
-                                self.model.set('span', App.span);    
-                            } else {
-                                self.model.set('offset', App.offset);    
-                            }
-                        }
-
-                        App.resizableMode = "";
-                        App.offset = "";                        
-                        App.span = "";                        
-                        self.save();
-                    },                    
-                }); 
+                this.setResizableEvent();
             }
 
-            
-            this.getChildPoint().sortable({
-                 connectWith: ".logic-comp-childpoint",
-                 helper: 'clone',
-                 placeholder: 'sortableHelper',
-                 tolerance: 'intersect',
-                 start: function(event, ui) { 
-                    
-                    $('.sortableHelper').addClass(ui.item.attr('class')).html(ui.item.clone().html()).css({
-                        height: ui.item.height(),
-                        opacity : 0.5
-                    }).find('> div').removeClass('select_box');
-                    
-                    $('.sortableHelper').find(".ui-resizable-handle").remove();
-                    $('.sortableHelper').removeClass(".ui-resizable");
-                     
-                 },
-                 
-                 beforeStop: function(event, ui) {
-                    ui.item.fadeOut(50).fadeIn('slow');  
-                 },
-                 
-                 stop: function(event, ui) {
-                     
-                        if (ui.item.data('name')){
-                            $('.modal').remove();
-                            $('.modal-backdrop').remove();                            
-                            var box = App.toys[ui.item.parent().data('cid')];
-                            
-                            var prev = ui.item.prev();
-                            if (prev) { 
-                                // 이전 객체 로 넣기 
-                                var toy = App.toys[prev.data('cid')]; 
-                                toy.addObjectAt(ui.item.data('type'), box.model.get('span') || App.MaxSpan, 'right');
-                            } else { 
-                                // 처음에 넣기 
-                                box.addObject(ui.item.data('type'), box.model.get('span') || App.MaxSpan, 'first');    
-                            }
-                            
-                            ui.item.hide('slow').remove();
-                            
-                        } else { 
-                            $(this).css('background', ''); 
-                            // this is box 
-                            var toy = App.toys[ui.item.data('cid')];
-                            var box = App.toys[toy.$el.parent().parent().data('cid')];
-                            
-                            if (box.cid != toy.parent.cid) {
-                                toy.remove();                                       
-                                toy.parent = box;
-                            }
-                                
-                            box.sortChildren();                            
-                        }
-                 }
-                });
+            if (!this.isRoot()) {
+                this.setDraggableEvent();
+                this.setDroppableEvent();
+            } 
            
+        },
+        
+        setResizableEvent: function() {
+            var self = this; 
+            var resizableReset = function(e, ui) { 
+                
+                var handle = $(this).css("cursor").split("-")[0];
+                
+                if (handle == "w"){
+                    
+                    var offset = Math.floor(( Math.abs(ui.position.left) + App.GridGutter)/(App.GridGutter + App.GridWidth));
+                    
+                    if (ui.position.left > 0) { 
+                        offset = App.offsetOrigin + offset  ;
+                    } else { 
+                        offset = App.offsetOrigin - offset ;    
+                    }
+
+                    if (offset < 0) offset = 0;
+                    
+                    var span = App.spanOrigin - offset;
+                    
+                    //self.$el.css({ top: "", left: "", width: "", height: "", position: "" })
+
+                    if (e.ctrlKey) {
+                        self.resetOffset(offset);    
+                        self.resetSpan(span);
+                    } else { 
+                        self.resetOffset(offset);
+                    }
+           
+                    self.viewSimpleInfo();
+                        
+                    App.offset = offset;
+                    App.span = span;
+                    App.resizableMode = "w";                        
+                } else { 
+                    
+                    var span = Math.floor((ui.size.width + App.GridGutter)/(App.GridGutter + App.GridWidth));
+                    
+                    if (span > 12) span = 12;
+                    
+                    //self.$el.css({ top: "", left: "", width: "", height: "", position: "" })
+                    
+                    self.model.set({span: span});
+                    self.resetSpan(span);
+                    
+                    self.viewSimpleInfo();
+                    
+                    App.resizableMode = "e";
+                }
+            };
+            
+            
+            this.$el.parent().resizable( "destroy" ).resizable({
+                minHeight: App.GridWidth,
+                minWidth: App.GridWidth,
+                containment: ".logic-comp-childpoint",
+                handles: "e,w",
+                distance: App.GridWidth + App.GridGutter,
+                grid : App.GridWidth + App.GridGutter,
+                start: function(e, ui) {
+                    var handle = $(this).css("cursor").split("-")[0];
+                
+                    if (handle == "w"){
+                        App.spanOrigin = parseInt(self.model.get('offset') || 0) + parseInt(self.model.get('span') || 0); 
+                        App.offsetOrigin = parseInt(self.model.get('offset') || 0); 
+                    }
+                    self.viewSimpleInfo();                        
+                    
+                },
+                
+                resize: function(e, ui) { 
+                    resizableReset.call(this, e, ui);
+                },
+                stop: function(e, ui) {
+                    if (App.resizableMode == 'w') {
+                        if (e.ctrlKey){
+                            self.model.set('offset', App.offset);    
+                            self.model.set('span', App.span);    
+                        } else {
+                            self.model.set('offset', App.offset);    
+                        }
+                    }
+
+                    App.resizableMode = "";
+                    App.offset = "";                        
+                    App.span = "";                        
+                    self.save();
+                    
+                    self.$el.parent().css({ top: "", left: "", width: "", height: "", position: "" })
+                    self.hideSimpleInfo();                         
+                },                    
+            });             
+            
+        },
+        
+        setDroppableEvent: function() {
+            var self = this; 
+            this.$el.droppable({
+                drop: function(event, ui) {
+                    var obj = $(this);
+                    if (obj.hasClass('right')) {
+                        var toy = App.toys[ui.draggable.data('cid')];
+                        self.appendRight(toy);
+                        toy.setSelectedToy();
+                    } else if (obj.hasClass('left')){
+                        var toy = App.toys[ui.draggable.data('cid')];
+                        self.appendLeft(toy);
+                        toy.setSelectedToy();
+                    } else if (obj.hasClass('center')){
+                        if (self.isContainer && !self.isRoot()) {
+                            var toy = App.toys[ui.draggable.data('cid')];
+                            self.insertComp(toy);
+                            toy.setSelectedToy();                        
+                        }
+
+                    }
+                    
+                    $(this).removeClass('droppable_over');
+                },
+                
+                activate: function(event, ui) {
+                    console.log('activate');
+                    
+                    console.log(event,ui);  
+                    
+                },
+                
+                over: function(event, ui) {
+                    
+                    console.log(ui, event);
+                    
+                    $(this).addClass('droppable_over');
+                }, 
+                
+                out: function(event, ui) { 
+                    $(this).removeClass('droppable_over');
+                }
+            })                
+            
+        },
+        
+        setDraggableEvent: function() {
+            var self = this; 
+            this.$el.draggable({
+                cursorAt: { 
+                  left: 15,
+                  top: 15  
+                },
+                scroll: true, 
+                scrollSensitivity: 100,
+                cursor: 'pointer',
+                helper: function(){
+                    return $("<div />").addClass('draggable_helper').html("<i class='icon-white " + App.list[self.type].icon + "'></i>").attr('data-cid', self.cid);
+                },
+                drag :function(event, ui) {
+
+                    var cid = $('.droppable_over').data('cid');
+                    
+                    if (cid) {
+                        var offset = App.toys[cid].$el.offset();
+                        var width = $('.droppable_over').width();
+                        
+                        var offsetWidth = ui.offset.left - offset.left;
+                        
+                        var gap = (width / 4);
+
+                        $('.droppable_over').removeClass('right left center');
+                                                
+                        if (gap * 3 < offsetWidth) {   // right
+                            $('.droppable_over').addClass('right');    
+                        }  else if (gap > offsetWidth ) {                        // left
+                            $('.droppable_over').addClass('left');    
+                        } else { 
+                            $('.droppable_over').addClass('center');    
+                        }
+                    }
+                    
+                }
+            });            
         },
         
         selectEdit: function() {
@@ -534,34 +658,58 @@ define([
          *  
          */ 
         renderViewPoint: function(data) {  this.getPoint('viewpoint').html(this.getTpl(data)); },
-        renderChildPoint: function(data) {  },
+        //renderChildPoint: function(data) {  },
         getDefaultValue: function() { return {}; },        
         onRender: function(data) { }, 
         isContainer: false,         
         isCustomRender: false,      
         
         firstChild: function() { 
-          return this.getChildPoint().children().first();            
+          return this.children[0];            
         },
         
         lastChild: function() { 
-          return this.getChildPoint().children().last();  
+          return this.children[this.children.length-1];  
+        },
+        
+        index: function() { 
+            var len = this.parent.children.length;
+            
+            for(var i = 0; i < len; i++) {
+                if (this.parent.children[i] == this) { 
+                    return i;    
+                }
+            }
+            
+            return -1;
         },
         
         next: function() { 
-            return this.$el.parent().next();
+            
+            var current = this.index() + 1;
+            if (current >= this.parent.children.length ) { 
+                return null;
+            } else { 
+                return this.parent.children[current];
+            }
         },   
         
         prev: function() { 
-            return this.$el.parent().prev();            
+            
+            var current = this.index();
+            
+            if (current <= 0) { 
+                return null;
+            } else { 
+                return this.parent.children[current-1];
+            }
         },
         
         moveNext: function() { 
             var obj = this.next();
             
-            if (obj.length) {
-                
-                App.toys[obj.data('cid')].appendRight(this);
+            if (obj) {
+                obj.appendRight(this);
                 this.scroll();
             }
         },
@@ -569,11 +717,16 @@ define([
         movePrev: function() { 
             var obj = this.prev();
             
-            if (obj.length) {
-                App.toys[obj.data('cid')].appendLeft(this);
+            if (obj) {
+                obj.appendLeft(this);
                 this.scroll();
             }
         },        
+        
+        resetEventList: function() { 
+            this.delegateEvents();
+            this.setDragEvent();
+        },
         
         render: function() {
             
@@ -588,17 +741,15 @@ define([
             // render view Point 
             //this.renderViewPoint(data);
 
-            this.delegateEvents();
-            
             // set style   
             this.setStyle(data);
             
-            this.setDragEvent();
+            this.resetEventList();
             
             // after render  
             this.onRender(data);            
             
-            this.renderChildPoint(data);
+            //this.renderChildPoint(data);
             
             return this;    
         },

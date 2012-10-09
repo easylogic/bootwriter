@@ -4,7 +4,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<a href="#" class="btn plus-btn"><i class="icon-plus"></i></a>');
+buf.push('<a href="#" class="btn plus-btn btn-small"><i class="icon-plus"></i></a>');
 }
 return buf.join("");
 };

@@ -24,15 +24,15 @@ define([
             
             var untitle = 'Untitled Document';
             if (App.mode == 'view') { 
-                var button = $('<a class="btn btn-success">Write</a>').on('click', function(e) { 
+                var button = $('<a class="btn btn-small btn-success">Write</a>').on('click', function(e) { 
                     location.href = '/write/' + App.main.contents.rootBox.model.id  
                 })    
             } else { 
-                var button = $('<a class="btn btn-success">View</a>').on('click', function(e) { 
+                var button = $('<a class="btn btn-small btn-success">View</a>').on('click', function(e) { 
                     location.href = '/view/' + App.main.contents.rootBox.model.id  
                 })
                 
-                var settings = $('<a class="btn btn-info" title="Settings"><i class="icon-cog icon-white"></a>').on('click', function(e) { 
+                var settings = $('<a class="btn btn-small btn-info" title="Settings"><i class="icon-cog icon-white"></a>').on('click', function(e) { 
                     App.main.contents.rootBox.selectEdit();
                     return false; 
                 })                
@@ -114,91 +114,23 @@ define([
                             
             // binding key event 
             $(document).keydown(function(e){
-                
-                if (App.mode == 'view') return false; 
 
                 if (!$('.bModal').length) {
 
-                    if (App.toy != null){
-                        App.toy.$el.popover('destroy');
+                    if (App.toy) {
+                        App.toy.keyMap(e);
+                    } else {
+                        App.keyMap(e);
                     }
-
-                    if (e.keyCode == 46) {
-                        if (App.toy != null) {
-                            if (confirm("Delete a toy really?")) {
-                              App.toy.remove();
-                              App.toy.$el.remove();
-                              delete App.toy;
-                              App.initSelectToy();                
-                            }
-                        }
-                        return false;                    
-                    } else if (e.keyCode == 13) {
-                        if (App.toy != null) { 
-                            App.toy.selectEdit();   
-                        }
-                    } else if (e.shiftKey && e.keyCode == 187) {
-                        $('.plus-btn').click();
-                    } else if (e.ctrlKey && e.shiftKey && e.keyCode == 39) {       // -> 
-                        if (App.toy != null) { 
-                            App.toy.moveNext();
-                        }                       
-                    } else if (e.ctrlKey && e.keyCode == 39) {       // -> 
-                        if (App.toy != null) { 
-                            App.toy.changeSpan(1);
-                        }                       
-                    } else if (e.shiftKey && e.keyCode == 39) {       // -> 
-                        if (App.toy != null) { 
-                            App.toy.changeOffset(1);
-                        }                           
-                    } else if (e.keyCode == 39) {       // -> 
-                        if (App.toy != null) { 
-                            var cid = App.toy.next().data('cid');
-                            
-                            if (!cid) { 
-                                cid = App.main.contents.rootBox.firstChild().data('cid');
-                            }
-                            
-                            App.toys[cid].setSelectedToy();                           
-                        } else { 
-                            var cid = App.main.contents.rootBox.firstChild().data('cid');
-                            App.toys[cid].setSelectedToy();
-                        }   
-                    } else if (e.ctrlKey  && e.shiftKey && e.keyCode == 37) {       // <- 
-                        if (App.toy != null) { 
-                            App.toy.movePrev();
-                        }                                     
-                    } else if (e.ctrlKey && e.keyCode == 37) {       // <- 
-                        if (App.toy != null) { 
-                            App.toy.changeSpan(-1);
-                        }                                     
-                    } else if (e.shiftKey && e.keyCode == 37) {       // <- 
-                        if (App.toy != null) { 
-                            App.toy.changeOffset(-1);
-                        }                                                   
-                    } else if (e.keyCode == 37) {       // -> 
-                        if (App.toy != null) { 
-                            var cid = App.toy.prev().data('cid');
-                            
-                            if (!cid) { 
-                                cid = App.main.contents.rootBox.lastChild().data('cid');
-                            }
-                            
-                            App.toys[cid].setSelectedToy();
-                                                       
-                        } else { 
-                            var cid = App.main.contents.rootBox.lastChild().data('cid');
-                            App.toys[cid].setSelectedToy();
-                        }        
-                    }                    
-                } else {        // if bModal open   
+           
+                } else {        // if bModal open
                     if (e.altKey) {
                         var code = e.keyCode;
                         if (49 <= code && code <= 57 ) {
                             var index = code - 49;
                             $('.modal-header-menu li:eq(' + index + ') a').tab('show');    
                         } else if (code == 83){     // Alt + s , save contents 
-                            if (App.toy != null) {
+                            if (App.toy) {
                                 App.toy.settings.update();
                             }
                         }
@@ -222,19 +154,22 @@ define([
         render: function() {
             
             this.$el.html(tpl())
-            
+
+            $("#toolbar").append(this.toolbar.render().el);            
             if (this.mode != 'view') { 
-                $("#toolbar").append(this.toolbar.render().el);    
                 $("#menubox").append(this.menubox.render().el);    
                 $("#settings").html(this.settings.render().el);    
-                
                 //$(".menubar-two").append("<div style='padding-top:10px;'/>").append(this.menubar.render().el);     
             }
             
             this.$(".logic-view .contents").append(this.contents.render().el);
             //this.$(".logic-control").append(this.control.render().el);
             
-            this.setDocumentEvent();
+                
+            if (App.mode == 'write') {
+                this.setDocumentEvent();    
+            }            
+            
              
             return this;    
         }

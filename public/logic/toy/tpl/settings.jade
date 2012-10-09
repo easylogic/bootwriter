@@ -6,7 +6,7 @@ include mixin_list
   ul.nav.nav-pills.modal-header-menu.pull-right
     - var i = 1;
     li.active: a(href='#data', data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Data
-    if isThemes
+    if isThemes && isRoot
       li: a(href='#themes',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Themes
     li: a(href='#skin',data-toggle='tab', rel='tooltip', title='Alt + ' + (i++)) Skin
     if isList  
@@ -55,7 +55,7 @@ include mixin_list
     if isUpload
       .tab-pane.fade#upload
         include upload
-    if isThemes
+    if isThemes && isRoot
       .tab-pane.fade#themes
         include themes
     .tab-pane.fade#skin

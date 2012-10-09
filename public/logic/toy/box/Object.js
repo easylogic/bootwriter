@@ -1,7 +1,8 @@
 define([
     '../ToyContainer.js',
-    './Settings.js'
-],function(ToyContainer, Settings){
+    './Settings.js',
+    './layout/Flow.js'
+],function(ToyContainer, Settings, FlowLayout){
     return ToyContainer.extend({
         className: 'logic-comp logic-comp-box logic-container',
         type : 'box',        
@@ -28,13 +29,22 @@ define([
                 this.resetOffset(data.offset);
                 
                 if (App.mode == 'write') 
-                    this.$el.css('cursor', 'pointer');                
+                    this.$el.css('cursor', 'pointer');
+                this.$el.addClass('notRootBox')                                        
             } else { 
                 this.$el.addClass('rootBox')    
             }            
         }, 
+       
+        getLayoutObject: function(type) { 
+            if (type == 'flow') { 
+                return new FlowLayout({ box : this });
+            }
+        },
         
         onRender: function(data) { 
+            this.doLayout();
+
             if (this.isRoot()) { 
                 
                 App.main.setTitle(data.title, data.tag);                    

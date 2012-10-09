@@ -11,10 +11,11 @@ define([
          *  
          */
         beforeComp: function(src, target, isCreate) {
-            this.beforeRender(src, target, isCreate);
+            //this.beforeRender(src, target, isCreate);
             this.beforeToy(src, target);
-                        
-            this.initBackground();
+              
+            this.doLayout();          
+            //this.initBackground();
         },
         
         /**
@@ -24,10 +25,11 @@ define([
          *  
          */        
         afterComp: function(src, target, isCreate) {
-            this.afterRender(src, target, isCreate);    
+            //this.afterRender(src, target, isCreate);    
             this.afterToy(src, target);            
-                        
-            this.initBackground();    
+             
+            this.doLayout();           
+           // this.initBackground();    
         },  
         
         /**
@@ -37,10 +39,11 @@ define([
          *  
          */
         insertComp: function(target) {
-            this.insertRender(target);          
+            //this.insertRender(target);          
             this.insertToy(target);
-                        
-            this.initBackground();
+              
+            this.doLayout();            
+            //this.initBackground();
         },
         
         removeComp: function(cid) {
@@ -56,30 +59,34 @@ define([
             
             this.children = temp;
             this.saveChildren();
+              
+            this.doLayout();  
                         
-            this.initBackground();
+            //this.initBackground();
         },
         
         // add element after rendering
         firstComp: function(obj) { 
             this.firstToy(obj);
-            this.firstRender(obj);       
-                        
-            this.initBackground();         
+            //this.firstRender(obj);       
+            
+            this.doLayout();            
+            //this.initBackground();         
         },
         
         // add element after rendering 
         lastComp: function(obj) { 
             this.lastToy(obj);
-            this.lastRender(obj); 
-                        
-            this.initBackground();   
+            //this.lastRender(obj); 
+              
+            this.doLayout();          
+            //this.initBackground();   
         },        
         
         insertObject: function(comp) {
             this.insertComp(comp);
                         
-            this.initBackground();
+            //this.initBackground();
         },                           
         
         /**
@@ -90,7 +97,10 @@ define([
         /**
          * 움직이는 toy 앞으로 추가 될 때 
          *  
-         */        
+         */   
+        
+        /*
+         * @deprecated     
         beforeRender: function(src, target, isCreate) { 
             target.hide();
             if (isCreate) { 
@@ -141,7 +151,7 @@ define([
         prependElement : function(elem) { 
             this.getChildPoint().prepend(elem);  
         },        
-        
+        */
         
         /**
          * children 저장 규칙 
@@ -206,8 +216,9 @@ define([
 
             this.children = temp;
             this.saveChildren();
-            
-            this.initBackground();
+          
+            this.doLayout();
+            //this.initBackground();
         },        
         
         /**
@@ -232,6 +243,9 @@ define([
          * wrapper 생성 
          *  
          */
+
+        /**
+         * @deprecated
         addWrap: function(html) {
             html = html || ""; 
             var wrap_html = this.initWrap(html);
@@ -243,40 +257,27 @@ define([
         initWrap: function(html) { 
             return $('<div />').html(html);            
         },             
-        
+        */
         addObjectById: function(obj, isLoad, i) { 
            
             var self = this, opt = obj, isLoad = isLoad || false, i = i || 0;
-            var wrap_html = this.addWrap();
             var index = i; 
             
             App.require(obj.type, function(Comp){
-                var toy = new Comp({parent: self, _id : obj.id});
-                wrap_html.html(toy.$el);
-                
-                self.children[index] = toy;
-                toy.show(false);
-                
-                self.initBackground();
+                var toy = new Comp({
+                    parent: self, 
+                    _id : obj.id, 
+                    success: function() {
+                        self.children[index] = this;
+                        this.show(false);
+                        
+                        self.doLayout();        
+                    }
+                });
                 
             })
         },
-        
-        renderChildPoint: function(data) { 
-
-            for(var i in this.children) { 
-              var child = this.children[i];
-              
-              if (typeof child == 'function') continue;
-              
-              var wrap_html = this.addWrap();
-              wrap_html.html(child.$el);
-              child.render();
-            }                
-            
-            this.initBackground();
-        },        
-        
+       
         initBackground: function() {
             if (App.mode == 'view') return ; 
             
@@ -399,12 +400,39 @@ define([
                     
                 }   
             });
-        }, 
-        
-        wrap : function(elem) { 
-            return $('<div />').html(elem);
         },
         
+        resetLayout: function(comp) { 
+            comp = comp || 'all';
+             
+            var layout = this.model.get('layout') || 'flow';
+
+            var layoutObject = this.getLayoutObject(layout);
+            
+            layoutObject.resetLayout(comp);            
+            
+        },
+        
+        doLayout: function(comp) {
+            comp = comp || 'all';
+             
+            var layout = this.model.get('layout') || 'flow';
+
+            var layoutObject = this.getLayoutObject(layout);
+
+            this.getChildPoint().html(layoutObject.createLayout(comp));
+            
+            layoutObject.afterLayout(comp);
+        },
+
+        getLayoutObject: function(type) { 
+            return {
+                createLayout : function() { 
+                    return $("<div />");
+                }
+            } 
+        },
+       
         preload: function(opt) { 
             this.children = [];
         }

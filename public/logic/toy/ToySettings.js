@@ -50,6 +50,7 @@ define([
         setImageAttr: function(data) { 
         
             if (data.imageType) data.cls = "img-" + data.imageType;
+            else data.cls = "";
 
             return data.cls;
         },        
@@ -222,6 +223,7 @@ define([
             var skinText = this.getSkinText(skin);
              
             return { 
+                className   : elem.find('.className').val(),
                 title       : elem.find('.title').val(),
                 text        : elem.find('.text').val(), 
                 span        : elem.find('.spanarea option:selected').val(),

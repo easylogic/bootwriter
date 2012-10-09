@@ -156,6 +156,13 @@ define([
                    App.main.settings.render();
                  },
                  
+                 select: function(cid) {
+                   if (App.toys[cid]){
+                        App.toys[cid].setSelectedToy();    
+                   }
+                     
+                 },
+                 
                  initSelectToy: function() {
                    
                    if (App.toy != null){
@@ -164,6 +171,18 @@ define([
                    
                    App.toy = null;
                    App.main.settings.render();                   
+                 },
+                 
+                 keyMap: function(e) {
+                    if (e.shiftKey && e.keyCode == 187) { // plus(+)
+                        $('.plus-btn').click();
+                    } else if (e.keyCode == 39) {       // right
+                        var cid = App.main.contents.rootBox.firstChild().cid;
+                        App.select(cid);
+                    } else if (e.keyCode == 37) {       // left
+                        var cid = App.main.contents.rootBox.lastChild().cid;
+                        App.select(cid);
+                    }      
                  },
                  
                  initContextMenu: function() {

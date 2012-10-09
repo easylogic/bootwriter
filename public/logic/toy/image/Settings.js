@@ -20,7 +20,7 @@ define([
             var data = obj;
           
             if (data.title) data.title = this.htmlEntities(obj.title);
-			if (data.text) data.text = markdown.toHTML(obj.text);
+			if (data.text) data.text = this.htmlEntities(obj.text);
 			
             data.cls = this.setImageAttr(data);
             			
@@ -34,11 +34,12 @@ define([
         getLocalConfig : function(config) { 
             return _.extend(config, {
                 infoList: [
+                    { type : 'input_text', value: config.className, name: 'className', title: 'Class Name'  },                
                     { type : 'select', value: config.imageType, select: [ 'rounded', 'circle', 'polaroid'], name: 'imageType', title: 'Image Type '  },                
                     { type : 'input_text', value: config.image, name: 'image', title: 'Image '  },                
                     { type : 'input_text', value: config.link, name: 'link', title: 'Link '  },                
-                    { type : 'title', value : config.title },
-                    { type : 'text', value: config.text }
+                    { type : 'title', value : config.title, title:'Title' },
+                    { type : 'text', value: config.text, title: 'Content' }
                 ]
             })
         }   				

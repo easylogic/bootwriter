@@ -21,10 +21,10 @@ buf.push('/>');
 buf.push('<div class="caption">');
 if ( title)
 {
-buf.push('<h5>');
+buf.push('<h2>');
 var __val__ = title
 buf.push(null == __val__ ? "" : __val__);
-buf.push('</h5>');
+buf.push('</h2>');
 }
 if ( text)
 {
