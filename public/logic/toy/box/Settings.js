@@ -3,14 +3,6 @@ define([
 ],function(ToySettings){
     return ToySettings.extend({
 
-        isThemes: true,
-
-        onShow: function() { 
-            var index = this.parent.model.get('themes');
-            
-            this.resetThemes(index);
-        },
-
         getAttributeData : function(value, elem) { 
             var data = {
                 layout     : elem.find('.layout option:selected').val()
@@ -19,8 +11,6 @@ define([
             if (this.isRoot()) { 
                 data.text =  elem.find('.text').val();   
             }
-            
-            data.themes =  elem.find('a.themes-image.active').data('themes');
             
             return data; 
         },

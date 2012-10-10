@@ -1,7 +1,7 @@
 - if (typeof skinText != 'undefined' && skinText) 
   style(type='text/css')!= skinText
 div(id= cid, class= className)
-  - if (App.mode == 'write' && !isRoot)
+  - if (!isRoot)
     .menu_list
       .menu_left
       .menu_right

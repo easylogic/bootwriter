@@ -27,7 +27,7 @@ define([
     './toy/toolbar/Object.js'
 ], function(LogicMain){
     return { 
-        initialize: function(_id) {
+        initialize: function() {
              if (!window.console) { 
                  window.console = { 
                     log: function(str) { 
@@ -201,7 +201,7 @@ define([
                  }
              });
                          
-            var main = new LogicMain({ _id : _id });
+            var main = new LogicMain();
             App.main = main;
             $('.logic-main').html(main.render().el);
         }        

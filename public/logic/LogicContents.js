@@ -7,17 +7,7 @@ define([
         initialize: function(opt) {
             var value = {isRoot : true };
             
-            if (opt._id) value._id = opt._id;
-
             this.rootBox = new Box(value);
-            
-            if (opt.mode) { 
-                this.setMode(opt.mode);    
-            }
-        },
-        
-        setMode: function(mode) { 
-            this.rootBox.setMode(mode);            
         },
         
         showMenu : function(isView) {

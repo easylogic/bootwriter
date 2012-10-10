@@ -1,7 +1,6 @@
 define([], function(){
     return Backbone.Model.extend({
         urlRoot: '/toys',
-        idAttribute: "_id",
         defaults : {
             isRoot: false,
             className : '',

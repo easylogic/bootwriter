@@ -58,7 +58,7 @@ define([
             }
             
             this.children = temp;
-            this.saveChildren();
+            //this.saveChildren();
               
             this.doLayout();  
                         
@@ -76,6 +76,7 @@ define([
         
         // add element after rendering 
         lastComp: function(obj) { 
+            console.log(obj);
             this.lastToy(obj);
             //this.lastRender(obj); 
               
@@ -173,7 +174,7 @@ define([
             }
             
             this.children = temp; 
-            this.saveChildren();
+            //this.saveChildren();
         },
 
 
@@ -192,7 +193,7 @@ define([
             }
             
             this.children = temp; 
-            this.saveChildren();
+            //this.saveChildren();
         },        
         
         /**
@@ -204,7 +205,7 @@ define([
                         
             this.children.push(target); 
             target.parent = this;
-            this.saveChildren();
+            //this.saveChildren();
         },      
         
                 
@@ -215,7 +216,7 @@ define([
             })
 
             this.children = temp;
-            this.saveChildren();
+            //this.saveChildren();
           
             this.doLayout();
             //this.initBackground();
@@ -279,8 +280,6 @@ define([
         },
        
         initBackground: function() {
-            if (App.mode == 'view') return ; 
-            
             if (this.children.length == 0) {
                 if (!this.isRoot()){
                     this.getChildPoint()
@@ -309,7 +308,7 @@ define([
                     var obj = { } ;
                     
                     obj =  new Comp(value);
-                    obj.render();
+                    //obj.render();
                     
                     if (align == 'first') {
                         self.firstComp(obj);
@@ -319,7 +318,7 @@ define([
                     
                     obj.show(true);
 
-                    setTimeout(function() { self.save(); }, 1000);
+                    //setTimeout(function() { self.save(); }, 1000);
                         
               });
         },        
@@ -363,45 +362,6 @@ define([
             return temp;
         },        
 
-        save: function(opt, callback) {
-            var self = this;  
-            var obj = {};
-            if (this.isContainer) { 
-                obj = { children: this.getToys() };
-            }
-            
-            this.model.save(obj, {
-                success: function() {
-                    
-                    callback && callback();
-                     
-                    if (self.isRoot()) { 
-                        App.main.setTitle(self.model.get('title'));    
-                    }                    
-                },
-                error : function(model, res) { 
-                    alert(res.responseText);    
-                }
-            });
-        },  
-        
-        saveChildren: function() { 
-            var obj = { children : [] };
-            if (this.isContainer) { 
-                obj.children = this.getToys();
-            }
-            
-            $.ajax({
-                url : '/toys/children/' + this.model.id,
-                type : 'POST',
-                data: obj,
-                dataType: 'json',
-                success: function(data) { 
-                    
-                }   
-            });
-        },
-        
         resetLayout: function(comp) { 
             comp = comp || 'all';
              

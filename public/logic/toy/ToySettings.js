@@ -7,8 +7,6 @@ define([
         events: {
           'click a.remove': 'remove',
           'click a.save': 'update',
-          'change .themes': 'selectThemes',
-          'click a.themes-image' : 'selectThemes',
           'swipeleft .tab-pane': 'moveLeft',
           'swiperight .tab-pane': 'moveRight'
         },     
@@ -55,20 +53,6 @@ define([
             return data.cls;
         },        
         
-        selectThemes: function(e) { 
-            var obj = $(e.currentTarget);
-            
-            var index = obj.data('themes');
-            
-            this.resetThemes(index);
-
-        },
-        
-        resetThemes: function(i) { 
-            $('a.themes-image').removeClass('active');
-            $('a.themes-image[data-themes=' + i + ']').addClass('active');
-        },
-        
         isRoot: function() { 
             return this.parent.isRoot();  
         },    
@@ -78,19 +62,14 @@ define([
             
             var value = this.getPreview(data);
             
-            $('html,body').animate({ scrollTop : this.parent.$el.offset().top - 100});
-                        
-            var self = this;
-            
             delete value.target; 
             
-            this.parent.setModel(value, function() {
-                self.parent.update();    
-            });
+            this.parent.setModel(value);
+            this.parent.update();
                                     
             this.$el.close();
             
-            //this.parent.setSelectedToy();
+            this.parent.setSelectedToy();    
         },
         
         getThemes: function() { 
@@ -260,7 +239,6 @@ define([
                 isList   :  this.isList,
                 isTable  : this.isTable,
                 isUpload : this.isUpload,
-                isThemes: this.isThemes,
                 isForm: this.isForm,
             });
             

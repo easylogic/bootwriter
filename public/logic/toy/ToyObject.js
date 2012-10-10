@@ -136,11 +136,6 @@ define([
                 });    
             } else { 
                 if (!this.isRoot() && opt.span) this.model.set('span', opt.span);
-                this.save({
-                    success: function() { 
-                        if (opt.success) opt.success.call(self);    
-                    }
-                });            
             }            
         },      
 
@@ -160,24 +155,9 @@ define([
         },
     	
         setModel: function(obj, callback) { 
-          this.model.set(obj);  
-          this.save(null, callback);            
+          this.model.set(obj);
+          if (callback && typeof callback == 'function') callback();  
         },
-        
-        save: function(opt, callback) { 
-            this.model.save(opt, {
-                success: function() { 
-                    callback && callback();    
-                },
-                error : function(model, res) { 
-                    alert(res.responseText);    
-                }
-            });
-        },       
-        
-        saveChildren: function() { 
-                        
-        }, 
         
         remove : function() { 
             
@@ -233,7 +213,7 @@ define([
             this.viewSimpleInfo();
             this.hideSimpleInfo();
             
-            this.save();
+            //this.save();
         },
         
         changeOffset: function(offset) {
@@ -258,7 +238,7 @@ define([
             this.viewSimpleInfo();
             this.hideSimpleInfo();
                         
-            this.save();
+            //this.save();
         },
         
         
@@ -380,7 +360,7 @@ define([
                     
                     obj.show(true);
                     
-                    setTimeout(function() { self.parent.save(); }, 1000);    
+                    //setTimeout(function() { self.parent.save(); }, 1000);    
               });
         },          
         
@@ -432,8 +412,6 @@ define([
         
         setDragEvent: function() { 
 
-            if (App.mode == 'view') return;
-             
             var self = this;
            
             if (!this.isRoot()) {
@@ -541,7 +519,7 @@ define([
                     App.resizableMode = "";
                     App.offset = "";                        
                     App.span = "";                        
-                    self.save();
+                    //self.save();
                     
                     self.$el.parent().css({ top: "", left: "", width: "", height: "", position: "" })
                     self.hideSimpleInfo();                         
@@ -638,7 +616,7 @@ define([
         
         selectEdit: function() {
             
-            if (App.mode != 'view') this.settings.open(); 
+            this.settings.open(); 
             return false;   
         },
         

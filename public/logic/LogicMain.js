@@ -9,34 +9,22 @@ define([
         initialize: function(opt) { 
             
             App.main       = this;
-            this.mode       = App.mode;
-            this.toolbar    = new LogicToolbar({ _id : opt._id});
+            this.toolbar    = new LogicToolbar();
             this.menubox    = new LogicMenuBox();
             //this.menubar    = new LogicMenuBox();
-            this.contents   = new LogicContents({ _id : opt._id});
+            this.contents   = new LogicContents();
             this.settings   = new LogicSettings();
-            
-            if (opt._id) this._id = opt._id;
         },
         
         setTitle: function(title,  tags) {
             tags = tags || []; 
             
             var untitle = 'Untitled Document';
-            if (App.mode == 'view') { 
-                var button = $('<a class="btn btn-small btn-success">Write</a>').on('click', function(e) { 
-                    location.href = '/write/' + App.main.contents.rootBox.model.id  
-                })    
-            } else { 
-                var button = $('<a class="btn btn-small btn-success">View</a>').on('click', function(e) { 
-                    location.href = '/view/' + App.main.contents.rootBox.model.id  
-                })
-                
-                var settings = $('<a class="btn btn-small btn-info" title="Settings"><i class="icon-cog icon-white"></a>').on('click', function(e) { 
-                    App.main.contents.rootBox.selectEdit();
-                    return false; 
-                })                
-            }
+            
+            var settings = $('<a class="btn btn-small btn-info" title="Settings"><i class="icon-cog icon-white"></a>').on('click', function(e) { 
+                App.main.contents.rootBox.selectEdit();
+                return false; 
+            })                
             
             var span = $('<span />');
             
@@ -45,50 +33,44 @@ define([
             else 
                 span.append(untitle).addClass('untitled');
             
-            if (App.mode == 'write') { 
-                span.on('dblclick', function(e){
-                    var title = $(this).text();
+            span.on('dblclick', function(e){
+                var title = $(this).text();
+                
+                var text = $("<input type='text' />").val(title == untitle ? '' : title).addClass('title_text').css('width', '100%');
+                span.after(text).hide();
+                
+                var callback = function(e){
+                    var subtitle = $(this).val();
                     
-                    var text = $("<input type='text' />").val(title == untitle ? '' : title).addClass('span4');
-                    span.after(text).hide();
+                    if (subtitle == '') { 
+                      span.addClass('untitled')  
+                    }  else { 
+                      span.removeClass('untitled')
+                    }
                     
-                    var callback = function(e){
-                        var subtitle = $(this).val();
-                        
-                        if (subtitle == '') { 
-                          span.addClass('untitled')  
-                        }  else { 
-                          span.removeClass('untitled')
-                        }
-                        
-                        span.text(subtitle == '' ? untitle : subtitle).show();
-                        
-                        if (subtitle) {
-                            span.removeClass('untitled')
-                        } else { 
-                            span.addClass('untitled')
-                        }
-                        
-                        $(this).remove();
-                        
-                        App.main.contents.rootBox.setModel({ title : subtitle });                    
-                           
-                    }   
+                    span.text(subtitle == '' ? untitle : subtitle).show();
                     
-                    text.on('blur', callback).on('keydown', function(e){
-                        if (e.keyCode == 13) callback.call(this,e);
-                        
-                    }).focus();
-                 });                
-            } else { 
-                window.title = title + (title ? " - " : "") + "EasyLogic";
-            }
+                    if (subtitle) {
+                        span.removeClass('untitled')
+                    } else { 
+                        span.addClass('untitled')
+                    }
+                    
+                    $(this).remove();
+                    
+                    self.title = subtitle;                    
+                       
+                }   
+                
+                text.on('blur', callback).on('keydown', function(e){
+                    if (e.keyCode == 13) callback.call(this,e);
+                    
+                }).focus();
+             });                
             
             var h1 = $('<h1 />').append(span)
             
-            $('.boxeditor').html($("<div />").html(button));
-            
-            if (App.mode == 'write') $('.boxset').html($("<div />").html(settings));
+            $('.boxset').html($("<div />").html(settings));
             
             this.$(".logic-view .titlebar").html(h1)
             
@@ -156,20 +138,13 @@ define([
             this.$el.html(tpl())
 
             $("#toolbar").append(this.toolbar.render().el);            
-            if (this.mode != 'view') { 
-                $("#menubox").append(this.menubox.render().el);    
-                $("#settings").html(this.settings.render().el);    
-                //$(".menubar-two").append("<div style='padding-top:10px;'/>").append(this.menubar.render().el);     
-            }
-            
-            this.$(".logic-view .contents").append(this.contents.render().el);
-            //this.$(".logic-control").append(this.control.render().el);
-            
+            $("#menubox").append(this.menubox.render().el);    
+            $("#settings").html(this.settings.render().el);
                 
-            if (App.mode == 'write') {
-                this.setDocumentEvent();    
-            }            
+            this.$(".logic-view .contents").append(this.contents.render().el);
+            this.setDocumentEvent();    
             
+            this.setTitle();
              
             return this;    
         }

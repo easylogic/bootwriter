@@ -116,14 +116,7 @@ buf.push('</h3><ul class="nav nav-pills modal-header-menu pull-right">');
  var i = 1;
 buf.push('<li class="active"><a');
 buf.push(attrs({ 'href':('#data'), 'data-toggle':('tab'), 'rel':('tooltip'), 'title':('Alt + ' + (i++)) }, {"href":true,"data-toggle":true,"rel":true,"title":true}));
-buf.push('>Data</a></li>');
-if ( isThemes && isRoot)
-{
-buf.push('<li><a');
-buf.push(attrs({ 'href':('#themes'), 'data-toggle':('tab'), 'rel':('tooltip'), 'title':('Alt + ' + (i++)) }, {"href":true,"data-toggle":true,"rel":true,"title":true}));
-buf.push('>Themes</a></li>');
-}
-buf.push('<li><a');
+buf.push('>Data</a></li><li><a');
 buf.push(attrs({ 'href':('#skin'), 'data-toggle':('tab'), 'rel':('tooltip'), 'title':('Alt + ' + (i++)) }, {"href":true,"data-toggle":true,"rel":true,"title":true}));
 buf.push('>Skin</a></li>');
 if ( isList  )
@@ -340,19 +333,6 @@ buf.push('</select><span class="add-on ic-view-point"></span></div><div class="i
 if ( isUpload)
 {
 buf.push('<div id="upload" class="tab-pane fade"><form name="upload" action="/uploads" method="post" enctype="multipart/form-data" target="image_upload"><fieldset style="padding-left:20px"><input type="file" name="image" class="file"/><button type="submit" class="btn btn-warning upload">Upload</button><iframe name="image_upload" height="50px" frameborder="0" class="span7"></iframe></fieldset></form></div>');
-}
-if ( isThemes && isRoot)
-{
-buf.push('<div id="themes" class="tab-pane fade"><ul style="width:700px;margin-left:20px;" class="thumbnails">');
- for(var i = 1; i <= 20; i++ )
-{
-buf.push('<li style="width:105px;" class="span2"><a');
-buf.push(attrs({ 'href':('#'), 'data-themes':(i), "class": ('thumbnail') + ' ' + ('themes-image') }, {"href":true,"data-themes":true}));
-buf.push('><img');
-buf.push(attrs({ 'src':("https://twitter.com/images/themes/theme"+i+"/swatch.gif") }, {"src":true}));
-buf.push('/></a></li>');
-}
-buf.push('</ul></div>');
 }
 buf.push('<div id="skin" class="tab-pane fade"><form class="form-horizontal"><fieldset style="padding-left: 20px;"><div class="control-group"><label class="control-label settings-label">Themes</label><div class="controls"> <select data-placeholder="Select Themes" class="themes"><option value=""></option>');
 // iterate themes

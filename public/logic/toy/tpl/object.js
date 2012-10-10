@@ -14,7 +14,7 @@ buf.push('</style>');
 buf.push('<div');
 buf.push(attrs({ 'id':(cid), "class": (className) }, {"id":true,"class":true}));
 buf.push('>');
- if (App.mode == 'write' && !isRoot)
+ if (!isRoot)
 {
 buf.push('<div class="menu_list"><div class="menu_left"></div><div class="menu_right"></div><div class="menu_center"></div><span class="simple-view simple-view-left badge"></span><span class="simple-view simple-view-right badge"></span></div>');
 }
